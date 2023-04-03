@@ -1,6 +1,4 @@
-package app.objects;
-
-import app.geometry.Point;
+package app.geometry;
 
 public class Prism extends Figure {
 

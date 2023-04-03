@@ -1,74 +1,70 @@
 package app;
 
-import app.configuration.Configuration;
-import app.objects.Coordinate;
-import app.objects.Prism;
+import java.util.ArrayList;
+import java.util.List;
+
+import app.config.Configuration;
+import app.geometry.Coordinate;
+import app.geometry.Figure;
+import app.geometry.Prism;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-
-
 public class Main extends Application implements Configuration {
+    private Pane mainPane = new Pane();
+    private Scene scene = new Scene(mainPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+    private List<Figure> objects = new ArrayList<>();
+
+    private void addObjects(){
+        objects.add(new Prism());
+        
+        initObjects();
+    }
+
+    private void initObjects(){
+        objects.forEach(o -> {
+            mainPane.getChildren().addAll(o.moveZ(100).rotateOZ(90).getLines());
+        });
+    }
 
     @Override
     public void start(Stage stage) {
-        
-        Pane pane = new Pane();
-        Prism prism = new Prism();
-        Coordinate c = new Coordinate();
-        Scene scene = new Scene(pane, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        pane.getChildren().addAll(prism.getLines());
+        addObjects();
 
         scene.setOnKeyPressed(event -> {
-            pane.getChildren().clear();
+            mainPane.getChildren().clear();
             switch(event.getCode()) {
-                case W:
-                    prism.moveX(1.0);
-                    break;
                 case A:
-                    prism.moveX(-1.0);
-                    break;
-                case E:
-                    prism.moveY(1.0);
-                    break;
-                case S:
-                    prism.moveY(-1.0);
-                    break;
-                case R:
-                    prism.moveZ(1.0);
+                    objects.forEach(o -> mainPane.getChildren().addAll(o.moveX(MOVE_INC).getLines()));
                     break;
                 case D:
-                    prism.moveZ(-1.0);
+                    objects.forEach(o -> mainPane.getChildren().addAll(o.moveX(-MOVE_INC).getLines()));
                     break;
-                case T:
-                    prism.rotateOX(1.0);
+                case S:
+                    objects.forEach(o -> mainPane.getChildren().addAll(o.moveZ(MOVE_INC).getLines()));
                     break;
-                case F:
-                    prism.rotateOX(-1.0);
+                case W:
+                    objects.forEach(o -> mainPane.getChildren().addAll(o.moveZ(-MOVE_INC).getLines()));
                     break;
-                case Y:
-                    prism.rotateOY(1.0);
+                case UP:
+                    objects.forEach(o -> mainPane.getChildren().addAll(o.rotateOX(-ANGLE_INC).getLines()));
                     break;
-                case G:
-                    prism.rotateOY(-1.0);
+                case DOWN:
+                    objects.forEach(o -> mainPane.getChildren().addAll(o.rotateOX(ANGLE_INC).getLines()));
                     break;
-                case U:
-                    prism.rotateOZ(1.0);
+                case RIGHT:
+                    objects.forEach(o -> mainPane.getChildren().addAll(o.rotateOY(-ANGLE_INC).getLines()));
                     break;
-                case H:
-                    prism.rotateOZ(-1.0);
+                case LEFT:
+                    objects.forEach(o -> mainPane.getChildren().addAll(o.rotateOY(ANGLE_INC).getLines()));
                     break;
                 default:
-                    break;
+                    System.out.println("Key " + event.getCode() + " is unhandled");
             }
-            pane.getChildren().addAll(prism.getLines());
-            pane.getChildren().addAll(c.getLines());
-            stage.setScene(scene);
         });
-        
+    
         stage.setScene(scene);
         stage.show();
     }

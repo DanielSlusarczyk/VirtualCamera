@@ -1,8 +1,8 @@
-package app.movement;
+package app.control;
 
 import org.ejml.simple.SimpleMatrix;
 
-import app.configuration.Configuration;
+import app.config.Configuration;
 import app.geometry.Point;
 
 public class Movement implements Configuration{

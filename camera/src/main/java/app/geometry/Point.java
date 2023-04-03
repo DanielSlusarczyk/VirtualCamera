@@ -4,7 +4,6 @@ import org.ejml.simple.SimpleMatrix;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 public class Point {
     @Getter
@@ -29,6 +28,10 @@ public class Point {
 
     public double getZ() {
         return matrix.get(2, 0);
+    }
+
+    public double getW(){
+        return matrix.get(3,0);
     }
 
     public void setX(double x) {

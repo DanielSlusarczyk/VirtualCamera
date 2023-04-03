@@ -1,6 +1,5 @@
-package app.objects;
+package app.geometry;
 
-import app.geometry.Point;
 import javafx.scene.paint.Color;
 
 public class Coordinate extends Figure {

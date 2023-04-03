@@ -1,13 +1,12 @@
-package app.objects;
+package app.geometry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import app.configuration.Configuration;
-import app.geometry.Point;
-import app.movement.Movement;
-import app.movement.View;
+import app.config.Configuration;
+import app.control.Movement;
+import app.control.View;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import lombok.Getter;
@@ -31,7 +30,6 @@ public class Figure implements Configuration{
     }
 
     public Figure project(){
-        
         Figure projected = new Figure();
         projected.setEdges(this.getEdges());
         projected.setPoints(this.copyPoints());
