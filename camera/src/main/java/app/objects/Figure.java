@@ -8,6 +8,7 @@ import app.configuration.Configuration;
 import app.geometry.Point;
 import app.movement.Movement;
 import app.movement.View;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,8 @@ public class Figure implements Configuration{
     private Point[] points;
     @Getter @Setter
     private boolean[][] edges;
+    @Getter @Setter
+    private Color [] colors;
     private View view = new View();
 
     private Point[] copyPoints(){
@@ -48,7 +51,11 @@ public class Figure implements Configuration{
         for(int i = 0; i < edges.length; i++){
             for(int j = 0; j < edges.length; j++){
                 if(edges[i][j]){
-                    toDraw.add(new Line(p[i].getX(), p[i].getY(), p[j].getX(), p[j].getY()));
+                    Line line = new Line(p[i].getX(), p[i].getY(), p[j].getX(), p[j].getY());
+                    if(colors != null){
+                        line.setStroke(colors[i]);
+                    }
+                    toDraw.add(line);
                 }
             }
         }
@@ -64,6 +71,30 @@ public class Figure implements Configuration{
 
     public Figure rotateOY(double angle){
         Arrays.stream(this.getPoints()).forEach(p -> Movement.rotatePointOY(p, angle));
+
+        return this;
+    }
+
+    public Figure rotateOZ(double angle){
+        Arrays.stream(this.getPoints()).forEach(p -> Movement.rotatePointOZ(p, angle));
+
+        return this;
+    }
+
+    public Figure moveX(double x){
+        Arrays.stream(this.getPoints()).forEach(p -> Movement.move(p, x, 0.0, 0.0));
+
+        return this;
+    }
+
+    public Figure moveY(double x){
+        Arrays.stream(this.getPoints()).forEach(p -> Movement.move(p, 0.0, x, 0.0));
+
+        return this;
+    }
+
+    public Figure moveZ(double x){
+        Arrays.stream(this.getPoints()).forEach(p -> Movement.move(p, 0.0, 0.0, x));
 
         return this;
     }
