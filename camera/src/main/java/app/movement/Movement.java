@@ -12,10 +12,10 @@ public class Movement implements Configuration{
         double cos = Math.cos(radians);
         double sin = Math.sin(radians);
         SimpleMatrix rotationMatrix = new SimpleMatrix(new double[][] {
-            {1, 0, 0, 0},
-            {0, cos, -sin, 0},
-            {0, sin, cos, 0},
-            {0, 0, 0, 1}
+            {1.0, 0.0, 0.0, 0.0},
+            {0.0, cos, -sin, 0.0},
+            {0.0, sin, cos, 0.0},
+            {0.0, 0.0, 0.0, 1.0}
         });
         SimpleMatrix resultMatrix = rotationMatrix.mult(point.getMatrix());
         

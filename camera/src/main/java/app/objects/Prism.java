@@ -1,54 +1,40 @@
 package app.objects;
 
-import app.geometry.Edge;
 import app.geometry.Point;
 
 public class Prism extends Figure {
-    //     F__________ B
+
+    //     7__________ 6(Y)
     //     /|        /| 
     //    / |       / |
-    // G /__|_____H/  |
-    //  |  E|_____|___| D
+    // 4 /__|_____5/  |
+    //  |  3|_____|___| 2
     //  |  /      |  /
     //  | /       | /
     //  |/________|/
-    // A           C
-    
-    public Prism(Point A, Point B){
-        new Point(A.getX(), A.getY(), A.getZ());
-        new Point(B.getX(), B.getY(), B.getZ());
-        Point C = new Point(B.getX(), A.getY(), A.getZ());
-        Point D = new Point(B.getX(), B.getY(), A.getZ());
-        Point E = new Point(A.getX(), B.getY(), A.getZ());
-        
-        Point F = new Point(A.getX(), B.getY(), B.getZ());
-        Point G = new Point(A.getX(), A.getY(), B.getZ());
-        Point H = new Point(B.getX(), A.getY(), B.getZ());
-
-        addVertex(A);
-        addVertex(B);
-        addVertex(C);
-        addVertex(D);
-        addVertex(E);
-        addVertex(F);
-        addVertex(G);
-        addVertex(H);
-
-        addEdge(new Edge(new Point(A.getX(), A.getY(), A.getZ()), new Point(B.getX(), A.getY(), A.getZ())));
-        addEdge(new Edge(new Point(B.getX(), A.getY(), A.getZ()), new Point(B.getX(), B.getY(), A.getZ())));
-        addEdge(new Edge(new Point(B.getX(), B.getY(), A.getZ()), new Point(A.getX(), B.getY(), A.getZ())));
-        addEdge(new Edge(new Point(A.getX(), B.getY(), A.getZ()), new Point(A.getX(), A.getY(), A.getZ())));
-        addEdge(new Edge(new Point(A.getX(), A.getY(), B.getZ()), new Point(B.getX(), A.getY(), B.getZ())));
-        addEdge(new Edge(new Point(B.getX(), A.getY(), B.getZ()), new Point(B.getX(), B.getY(), B.getZ())));
-        addEdge(new Edge(new Point(B.getX(), B.getY(), B.getZ()), new Point(A.getX(), B.getY(), B.getZ())));
-        addEdge(new Edge(new Point(A.getX(), B.getY(), B.getZ()), new Point(A.getX(), A.getY(), B.getZ())));
-        addEdge(new Edge(new Point(A.getX(), A.getY(), A.getZ()), new Point(A.getX(), A.getY(), B.getZ())));
-        addEdge(new Edge(new Point(B.getX(), A.getY(), A.getZ()), new Point(B.getX(), A.getY(), B.getZ())));
-        addEdge(new Edge(new Point(B.getX(), B.getY(), A.getZ()), new Point(B.getX(), B.getY(), B.getZ())));
-        addEdge(new Edge(new Point(A.getX(), B.getY(), A.getZ()), new Point(A.getX(), B.getY(), B.getZ())));
-    }
+    // 0(X)        1
 
     public Prism(){
-        this(new Point(-10, -10, -10), new Point(10, 10, 10));
+        this(new Point(-10.0, -10.0, -10.0), new Point(10.0, 10.0, 10.0));
+    }
+    
+    public Prism(Point X, Point Y){
+        Point[] points = new Point[8];
+        points[0] = new Point(X.getX(), X.getY(), X.getZ()); // 0
+        points[1] = new Point(Y.getX(), X.getY(), X.getZ()); // 1
+        points[2] = new Point(Y.getX(), Y.getY(), X.getZ()); // 2
+        points[3] = new Point(X.getX(), Y.getY(), X.getZ()); // 3
+        points[4] = new Point(X.getX(), X.getY(), Y.getZ()); // 4
+        points[5] = new Point(Y.getX(), X.getY(), Y.getZ()); // 5
+        points[6] = new Point(Y.getX(), Y.getY(), Y.getZ()); // 6
+        points[7] = new Point(X.getX(), Y.getY(), Y.getZ()); // 7 
+
+        boolean[][] edges = new boolean[points.length][points.length];
+        edges[0][1] = edges[1][2] = edges[2][3] = edges[3][0] = true;
+        edges[4][5] = edges[5][6] = edges[6][7] = edges[7][4] = true;
+        edges[0][4] = edges[1][5] = edges[2][6] = edges[3][7] = true;
+
+        this.setEdges(edges);
+        this.setPoints(points);
     }
 }
