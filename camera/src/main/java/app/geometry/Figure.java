@@ -26,22 +26,22 @@ public class Figure implements Configuration{
         return copyPoints;
     }
 
-    public Figure project(){
+    public Figure project(double fov){
         Figure projected = new Figure();
         projected.setEdges(this.getEdges());
         projected.setPoints(this.copyPoints());
 
         Arrays.stream(projected.getPoints()).forEach(p -> {
-            view.projectPoint(p);
+            view.projectPoint(p, fov);
             view.centerPoint(p);
         });
 
         return projected;
     }
 
-    public List<Line> getLines(){
+    public List<Line> getLines(double fov){
         List<Line> toDraw = new ArrayList<>();
-        Point[] p = this.project().getPoints();
+        Point[] p = this.project(fov).getPoints();
         
         for(int i = 0; i < edges.length; i++){
             for(int j = 0; j < edges.length; j++){

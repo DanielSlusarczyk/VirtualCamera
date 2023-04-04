@@ -19,6 +19,7 @@ public class Controller extends Application implements Configuration {
     private Pane mainPane = new Pane();
     private Scene scene = new Scene(mainPane, WINDOW_WIDTH, WINDOW_HEIGHT);
     private List<Figure> objects = new ArrayList<>();
+    private double fov = 60.0;
 
     Map<KeyCode, Boolean> pressedButtons = new HashMap<>() {
         {
@@ -30,6 +31,10 @@ public class Controller extends Application implements Configuration {
             put(RIGHT_ROTATION, false);
             put(UP_ROTATION, false);
             put(DOWN_ROTATION, false);
+            put(LEFT_TILT, false);
+            put(RIGHT_TILT, false);
+            put(ZOOM_IN, false);
+            put(ZOOM_OUT, false);
         }
     };
 
@@ -41,7 +46,7 @@ public class Controller extends Application implements Configuration {
 
     private void initObjects() {
         objects.forEach(o -> {
-            mainPane.getChildren().addAll(o.moveZ(100).rotateOZ(90).getLines());
+            mainPane.getChildren().addAll(o.moveZ(100).rotateOZ(90).getLines(fov));
         });
 
         scene.setOnKeyPressed(event -> {
@@ -82,16 +87,30 @@ public class Controller extends Application implements Configuration {
                             objects.forEach(o -> o.rotateOY(ANGLE_INC));
                         } else if (button == RIGHT_ROTATION){
                             objects.forEach(o -> o.rotateOY(-ANGLE_INC));
+                        } else if (button == LEFT_TILT){
+                            objects.forEach(o -> o.rotateOZ(-ANGLE_INC));
+                        } else if (button == RIGHT_TILT) {
+                            objects.forEach(o -> o.rotateOZ(ANGLE_INC));
+                        } else if (button == ZOOM_IN) {
+                            modifyFov(1.0);
+                        } else if (button == ZOOM_OUT) {
+                            modifyFov(-1.0);
                         }
                     }
                 });
 
                 mainPane.getChildren().clear();
-                objects.forEach(o -> mainPane.getChildren().addAll(o.getLines()));
+                objects.forEach(o -> mainPane.getChildren().addAll(o.getLines(fov)));
             }
         };
 
         timer.start();
+    }
+
+    private void modifyFov(double value){
+        this.fov += value;
+        this.fov = this.fov >= 180.0 ? 180.0 : this.fov;
+        this.fov = this.fov <= 0.0 ? 0.0 : this.fov;
     }
 
     public static void run(String[] args) {

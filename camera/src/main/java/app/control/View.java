@@ -8,8 +8,7 @@ import app.geometry.Point;
 public class View implements Configuration {
     private double far = 100;
     private double near = 0.1;
-    private double fov = 60.0;
-    private SimpleMatrix projectionMatrix = defineProjectionMatrix();
+    private SimpleMatrix projectionMatrix;
     
     public Point centerPoint(Point point){
         point.setX(point.getX() + HALF_WINDOW_WIDTH);
@@ -18,8 +17,10 @@ public class View implements Configuration {
         return point;
     }
     
-    public Point projectPoint(Point point) {
+    public Point projectPoint(Point point, double fov) {
+        this.projectionMatrix = defineProjectionMatrix(fov);
         point.setMatrix(projectionMatrix.mult(point.getMatrix()));
+        
 
         point.setX(point.getX()/point.getW() * HALF_WINDOW_WIDTH);
         point.setY(point.getY()/point.getW() * HALF_WINDOW_HEIGHT);
@@ -28,9 +29,10 @@ public class View implements Configuration {
         return point;
     }
 
-    private SimpleMatrix defineProjectionMatrix() {
+    private SimpleMatrix defineProjectionMatrix(double fov) {
         double tanHalfFOV = Math.tan(Math.toRadians(fov / 2.0));
         double zRange = far - near;
+        //System.out.println(fov);
         
         double[][] values = {
             {1.0 / (tanHalfFOV * ASPECT_RATIO), 0.0, 0.0, 0.0},
