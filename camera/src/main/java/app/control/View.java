@@ -10,6 +10,10 @@ public class View implements Configuration {
     private double near = 0.1;
     private SimpleMatrix projectionMatrix;
     
+    private final double HALF_WINDOW_WIDTH = WINDOW_WIDTH / 2;
+    private final double HALF_WINDOW_HEIGHT = WINDOW_HEIGHT / 2;
+    private final double ASPECT_RATIO = WINDOW_WIDTH/WINDOW_HEIGHT;
+
     public Point centerPoint(Point point){
         point.setX(point.getX() + HALF_WINDOW_WIDTH);
         point.setY(point.getY() + HALF_WINDOW_HEIGHT);
