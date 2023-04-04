@@ -7,7 +7,6 @@ import java.util.List;
 import app.config.Configuration;
 import app.control.Movement;
 import app.control.View;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +16,6 @@ public class Figure implements Configuration{
     private Point[] points;
     @Getter @Setter
     private boolean[][] edges;
-    @Getter @Setter
-    private Color [] colors;
     private View view = new View();
 
     private Point[] copyPoints(){
@@ -50,9 +47,6 @@ public class Figure implements Configuration{
             for(int j = 0; j < edges.length; j++){
                 if(edges[i][j]){
                     Line line = new Line(p[i].getX(), p[i].getY(), p[j].getX(), p[j].getY());
-                    if(colors != null){
-                        line.setStroke(colors[i]);
-                    }
                     toDraw.add(line);
                 }
             }

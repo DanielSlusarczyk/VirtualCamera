@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.config.Configuration;
-import app.geometry.Coordinate;
 import app.geometry.Figure;
 import app.geometry.Prism;
 import javafx.application.Application;
