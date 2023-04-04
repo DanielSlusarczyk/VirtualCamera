@@ -7,6 +7,7 @@ import java.util.Map;
 
 import app.config.Configuration;
 import app.geometry.Figure;
+import app.geometry.Point;
 import app.geometry.Prism;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -24,14 +25,15 @@ public class Controller extends Application implements Configuration {
     Map<KeyCode, Boolean> pressedButtons = new HashMap<>();
 
     private void addObjects() {
-        objects.add(new Prism());
+        objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0)));
+        objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0)));
 
         initObjects();
     }
 
     private void initObjects() {
         objects.forEach(o -> {
-            mainPane.getChildren().addAll(o.moveZ(100).rotateOZ(90).getLines(fov));
+            mainPane.getChildren().addAll(o.rotateOX(90).moveZ(150).getLines(fov));
         });
 
         scene.setOnKeyPressed(event -> {
@@ -53,54 +55,7 @@ public class Controller extends Application implements Configuration {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long timestamp) {
-
-                pressedButtons.forEach((button, pressed) -> {
-                    if (pressed) {
-                        switch(button){
-                            case W:
-                                objects.forEach(o -> o.moveZ(-MOVE_INC));
-                                break;
-                            case S:
-                                objects.forEach(o -> o.moveZ(MOVE_INC));
-                                break;
-                            case A:
-                                objects.forEach(o -> o.moveX(MOVE_INC));
-                                break;
-                            case D:
-                                objects.forEach(o -> o.moveX(-MOVE_INC));
-                                break;
-                            case SPACE:
-                                objects.forEach(o -> o.moveY(MOVE_INC));
-                                break;
-                            case UP:
-                                objects.forEach(o -> o.rotateOX(-ANGLE_INC));
-                                break;
-                            case DOWN:
-                                objects.forEach(o -> o.rotateOX(ANGLE_INC));
-                                break;
-                            case LEFT:
-                                objects.forEach(o -> o.rotateOY(ANGLE_INC));
-                                break;
-                            case RIGHT:
-                                objects.forEach(o -> o.rotateOY(-ANGLE_INC));
-                                break;
-                            case Q:
-                                objects.forEach(o -> o.rotateOZ(ANGLE_INC));
-                                break;
-                            case E:
-                                objects.forEach(o -> o.rotateOZ(-ANGLE_INC));
-                                break;                                
-                            case Z:
-                                modifyFov(1.0);
-                                break;
-                            case X:
-                                modifyFov(-1.0);
-                                break;
-                            default:
-                                System.out.println("Button " + button + " is unhandled");
-                        }
-                    }
-                });
+                handleButton();
 
                 mainPane.getChildren().clear();
                 objects.forEach(o -> mainPane.getChildren().addAll(o.getLines(fov)));
@@ -110,7 +65,57 @@ public class Controller extends Application implements Configuration {
         timer.start();
     }
 
-    private void modifyFov(double value){
+    private void handleButton() {
+        pressedButtons.forEach((button, pressed) -> {
+            if (pressed) {
+                switch (button) {
+                    case W:
+                        objects.forEach(o -> o.moveZ(-MOVE_INC));
+                        break;
+                    case S:
+                        objects.forEach(o -> o.moveZ(MOVE_INC));
+                        break;
+                    case A:
+                        objects.forEach(o -> o.moveX(MOVE_INC));
+                        break;
+                    case D:
+                        objects.forEach(o -> o.moveX(-MOVE_INC));
+                        break;
+                    case SPACE:
+                        objects.forEach(o -> o.moveY(MOVE_INC));
+                        break;
+                    case UP:
+                        objects.forEach(o -> o.rotateOX(-ANGLE_INC));
+                        break;
+                    case DOWN:
+                        objects.forEach(o -> o.rotateOX(ANGLE_INC));
+                        break;
+                    case LEFT:
+                        objects.forEach(o -> o.rotateOY(ANGLE_INC));
+                        break;
+                    case RIGHT:
+                        objects.forEach(o -> o.rotateOY(-ANGLE_INC));
+                        break;
+                    case Q:
+                        objects.forEach(o -> o.rotateOZ(ANGLE_INC));
+                        break;
+                    case E:
+                        objects.forEach(o -> o.rotateOZ(-ANGLE_INC));
+                        break;
+                    case Z:
+                        modifyFov(ZOOM_INC);
+                        break;
+                    case X:
+                        modifyFov(-ZOOM_INC);
+                        break;
+                    default:
+                        System.out.println("Button " + button + " is unhandled");
+                }
+            }
+        });
+    }
+
+    private void modifyFov(double value) {
         this.fov += value;
         this.fov = this.fov >= 180.0 ? 180.0 : this.fov;
         this.fov = this.fov <= 0.0 ? 0.0 : this.fov;

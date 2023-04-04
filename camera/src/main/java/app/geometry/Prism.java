@@ -11,10 +11,6 @@ public class Prism extends Figure {
     //  | /       | /
     //  |/________|/
     // 0(X)        1
-
-    public Prism(){
-        this(new Point(-10.0, -10.0, -10.0), new Point(10.0, 10.0, 10.0));
-    }
     
     public Prism(Point X, Point Y){
         Point[] points = new Point[8];
