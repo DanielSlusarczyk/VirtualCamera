@@ -24,7 +24,7 @@ public class View implements Configuration {
     public Point projectPoint(Point point, double fov) {
         this.projectionMatrix = defineProjectionMatrix(fov);
         point.setMatrix(projectionMatrix.mult(point.getMatrix()));
-        
+
 
         point.setX(point.getX()/point.getW() * HALF_WINDOW_WIDTH);
         point.setY(point.getY()/point.getW() * HALF_WINDOW_HEIGHT);
@@ -36,7 +36,6 @@ public class View implements Configuration {
     private SimpleMatrix defineProjectionMatrix(double fov) {
         double tanHalfFOV = Math.tan(Math.toRadians(fov / 2.0));
         double zRange = far - near;
-        //System.out.println(fov);
         
         double[][] values = {
             {1.0 / (tanHalfFOV * ASPECT_RATIO), 0.0, 0.0, 0.0},

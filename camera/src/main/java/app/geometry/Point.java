@@ -46,6 +46,10 @@ public class Point {
         matrix.set(2, 0, z);
     }
 
+    public void setW(double w) {
+        matrix.set(3, 0, w);
+    }
+
     @Override
     public String toString(){
         return "[" + matrix.get(0, 0) + " " + matrix.get(1, 0) + " " + matrix.get(2, 0) +  "]";

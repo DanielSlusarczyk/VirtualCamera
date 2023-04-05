@@ -44,7 +44,7 @@ public class Figure implements Configuration{
         Point[] p = this.project(fov).getPoints();
         
         for(int i = 0; i < edges.length; i++){
-            for(int j = 0; j < edges.length; j++){
+            for(int j = 0; j < edges.length; j++){                
                 if(edges[i][j]){
                     Line line = new Line(p[i].getX(), p[i].getY(), p[j].getX(), p[j].getY());
                     toDraw.add(line);

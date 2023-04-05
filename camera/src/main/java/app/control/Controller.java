@@ -116,9 +116,7 @@ public class Controller extends Application implements Configuration {
     }
 
     private void modifyFov(double value) {
-        this.fov += value;
-        this.fov = this.fov >= 180.0 ? 180.0 : this.fov;
-        this.fov = this.fov <= 0.0 ? 0.0 : this.fov;
+        fov = fov + value > 0.0 && fov + value < 180.0 ? fov + value : fov;
     }
 
     public static void run(String[] args) {
