@@ -9,89 +9,78 @@ import app.control.Movement;
 import app.control.View;
 import javafx.scene.shape.Line;
 import lombok.Getter;
-import lombok.Setter;
 
 public class Figure implements Configuration{
-    @Getter @Setter
-    private Point[] points;
-    @Getter @Setter
-    private boolean[][] edges;
+    @Getter
+    private List<Polygon> sides;
+
     private View view = new View();
 
-    private Point[] copyPoints(){
-        Point[] copyPoints = new Point[points.length];
-        for(int i = 0; i < copyPoints.length; i++){
-            copyPoints[i] = new Point(points[i].getX(), points[i].getY(), points[i].getZ());
-        }
-        return copyPoints;
-    }
-
-    public Figure project(double fov){
-        Figure projected = new Figure();
-        projected.setEdges(this.getEdges());
-        projected.setPoints(this.copyPoints());
-
-        Arrays.stream(projected.getPoints()).forEach(p -> {
-            view.projectPoint(p, fov);
-            view.centerPoint(p);
-        });
-
-        return projected;
+    public void setSides(List<Polygon> sides){
+        this.sides = sides;
     }
 
     public List<Line> getLines(double fov){
         List<Line> toDraw = new ArrayList<>();
-        Point[] p = this.project(fov).getPoints();
-        
-        for(int i = 0; i < edges.length; i++){
-            for(int j = 0; j < edges.length; j++){                
-                if(edges[i][j]){
-                    Line line = new Line(p[i].getX(), p[i].getY(), p[j].getX(), p[j].getY());
-                    toDraw.add(line);
-                }
-            }
-        }
+
+        //Point[] p = this.project(fov).getPoints();
+        //
+        //for(int i = 0; i < edges.length; i++){
+        //    for(int j = 0; j < edges.length; j++){                
+        //        if(edges[i][j]){
+        //            Line line = new Line(p[i].getX(), p[i].getY(), p[j].getX(), p[j].getY());
+        //            toDraw.add(line);
+        //        }
+        //    }
+        //}
+        sides.stream().flatMap(Polygon::getEdgeStream).forEach(edge ->{
+            Point A = view.projectPoint(edge.getA(), fov);
+            Point B = view.projectPoint(edge.getB(), fov);
+
+            Line line = new Line(A.getX(), A.getY(), B.getX(), B.getY());
+            toDraw.add(line);
+        });
 
         return toDraw;
     }
 
     public Figure rotateOX(double angle){
-        Arrays.stream(this.getPoints()).forEach(p -> Movement.rotatePointOX(p, angle));
+        sides.stream().flatMap(Polygon::getPointsStream).forEach(p -> Movement.rotatePointOX(p, angle));
 
         return this;
     }
 
     public Figure rotateOY(double angle){
-        Arrays.stream(this.getPoints()).forEach(p -> Movement.rotatePointOY(p, angle));
+        sides.stream().flatMap(Polygon::getPointsStream).forEach(p -> Movement.rotatePointOY(p, angle));
 
         return this;
     }
 
     public Figure rotateOZ(double angle){
-        Arrays.stream(this.getPoints()).forEach(p -> Movement.rotatePointOZ(p, angle));
+        sides.stream().flatMap(Polygon::getPointsStream).forEach(p -> Movement.rotatePointOZ(p, angle));
 
         return this;
     }
 
     public Figure moveX(double x){
-        Arrays.stream(this.getPoints()).forEach(p -> Movement.move(p, x, 0.0, 0.0));
+        sides.stream().flatMap(Polygon::getPointsStream).forEach(p -> Movement.move(p, x, 0.0, 0.0));
 
         return this;
     }
 
     public Figure moveY(double x){
-        Arrays.stream(this.getPoints()).forEach(p -> Movement.move(p, 0.0, x, 0.0));
+        sides.stream().flatMap(Polygon::getPointsStream).forEach(p -> Movement.move(p, 0.0, x, 0.0));
 
         return this;
     }
 
     public Figure moveZ(double x){
-        Arrays.stream(this.getPoints()).forEach(p -> Movement.move(p, 0.0, 0.0, x));
+        sides.stream().flatMap(Polygon::getPointsStream).forEach(p -> Movement.move(p, 0.0, 0.0, x));
 
         return this;
     }
 
     public void description(){
-        Arrays.stream(this.getPoints()).forEach(p -> System.out.println(p));
+        sides.stream().flatMap(Polygon::getPointsStream).forEach(p -> System.out.println(p));
     }
 }

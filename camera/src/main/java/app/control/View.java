@@ -14,7 +14,7 @@ public class View implements Configuration {
     private final double HALF_WINDOW_HEIGHT = WINDOW_HEIGHT / 2;
     private final double ASPECT_RATIO = WINDOW_WIDTH/WINDOW_HEIGHT;
 
-    public Point centerPoint(Point point){
+    private Point centerPoint(Point point){
         point.setX(point.getX() + HALF_WINDOW_WIDTH);
         point.setY(point.getY() + HALF_WINDOW_HEIGHT);
 
@@ -23,14 +23,13 @@ public class View implements Configuration {
     
     public Point projectPoint(Point point, double fov) {
         this.projectionMatrix = defineProjectionMatrix(fov);
-        point.setMatrix(projectionMatrix.mult(point.getMatrix()));
+        Point projected = new Point(projectionMatrix.mult(point.getMatrix()));
 
-
-        point.setX(point.getX()/point.getW() * HALF_WINDOW_WIDTH);
-        point.setY(point.getY()/point.getW() * HALF_WINDOW_HEIGHT);
-        point.setZ(point.getZ()/point.getW());
+        projected.setX(projected.getX()/projected.getW() * HALF_WINDOW_WIDTH);
+        projected.setY(projected.getY()/projected.getW() * HALF_WINDOW_HEIGHT);
+        projected.setZ(projected.getZ()/projected.getW());
         
-        return point;
+        return centerPoint(projected);
     }
 
     private SimpleMatrix defineProjectionMatrix(double fov) {
