@@ -13,29 +13,18 @@ import lombok.Getter;
 public class Figure implements Configuration{
     @Getter
     private List<Polygon> sides;
-
-    private View view = new View();
+    protected View view;
 
     public void setSides(List<Polygon> sides){
         this.sides = sides;
     }
 
-    public List<Line> getLines(double fov){
+    public List<Line> getLines(){
         List<Line> toDraw = new ArrayList<>();
 
-        //Point[] p = this.project(fov).getPoints();
-        //
-        //for(int i = 0; i < edges.length; i++){
-        //    for(int j = 0; j < edges.length; j++){                
-        //        if(edges[i][j]){
-        //            Line line = new Line(p[i].getX(), p[i].getY(), p[j].getX(), p[j].getY());
-        //            toDraw.add(line);
-        //        }
-        //    }
-        //}
         sides.stream().flatMap(Polygon::getEdgeStream).forEach(edge ->{
-            Point A = view.projectPoint(edge.getA(), fov);
-            Point B = view.projectPoint(edge.getB(), fov);
+            Point A = view.projectPoint(edge.getA());
+            Point B = view.projectPoint(edge.getB());
 
             Line line = new Line(A.getX(), A.getY(), B.getX(), B.getY());
             toDraw.add(line);

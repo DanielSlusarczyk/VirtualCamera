@@ -20,20 +20,20 @@ public class Controller extends Application implements Configuration {
     private Pane mainPane = new Pane();
     private Scene scene = new Scene(mainPane, WINDOW_WIDTH, WINDOW_HEIGHT);
     private List<Figure> objects = new ArrayList<>();
-    private double fov = 60.0;
+    private View view = new View();
 
     Map<KeyCode, Boolean> pressedButtons = new HashMap<>();
 
     private void addObjects() {
-        objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0)));
-        objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0)));
+        objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0), view));
+        objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0), view));
 
         initObjects();
     }
 
     private void initObjects() {
         objects.forEach(o -> {
-            mainPane.getChildren().addAll(o.rotateOX(90).moveZ(150).getLines(fov));
+            mainPane.getChildren().addAll(o.rotateOX(90).moveZ(150).getLines());
         });
 
         scene.setOnKeyPressed(event -> {
@@ -58,7 +58,7 @@ public class Controller extends Application implements Configuration {
                 handleButton();
 
                 mainPane.getChildren().clear();
-                objects.forEach(o -> mainPane.getChildren().addAll(o.getLines(fov)));
+                objects.forEach(o -> mainPane.getChildren().addAll(o.getLines()));
             }
         };
 
@@ -103,20 +103,16 @@ public class Controller extends Application implements Configuration {
                         objects.forEach(o -> o.rotateOZ(-ANGLE_INC));
                         break;
                     case Z:
-                        modifyFov(ZOOM_INC);
+                        view.changeFov(ZOOM_INC);
                         break;
                     case X:
-                        modifyFov(-ZOOM_INC);
+                        view.changeFov(-ZOOM_INC);
                         break;
                     default:
                         System.out.println("Button " + button + " is unhandled");
                 }
             }
         });
-    }
-
-    private void modifyFov(double value) {
-        fov = fov + value > 0.0 && fov + value < 180.0 ? fov + value : fov;
     }
 
     public static void run(String[] args) {

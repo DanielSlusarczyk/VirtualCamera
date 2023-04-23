@@ -3,6 +3,8 @@ package app.geometry;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.control.View;
+
 public class Prism extends Figure {
 
     //     H__________ G(Y)
@@ -15,7 +17,9 @@ public class Prism extends Figure {
     //  |/________|/
     // A(X)        B
     
-    public Prism(Point X, Point Y){
+    public Prism(Point X, Point Y, View view){
+        this.view = view;
+        
         Point A = new Point(X.getX(), X.getY(), X.getZ());
         Point B = new Point(Y.getX(), X.getY(), X.getZ());
         Point C = new Point(Y.getX(), Y.getY(), X.getZ());
@@ -35,7 +39,6 @@ public class Prism extends Figure {
         }};
         
         this.setSides(sides);
-
-        sides.forEach(side -> side.introduce());
+        
     }
 }
