@@ -6,16 +6,17 @@ import java.util.List;
 import app.config.Configuration;
 import app.control.Movement;
 import app.control.View;
+import app.transform.Triangulator;
 import javafx.scene.shape.Line;
 import lombok.Getter;
 
 public class Figure implements Configuration{
     @Getter
-    private List<Polygon> sides;
+    private List<Polygon> sides = new ArrayList<>();
     protected View view;
 
     public void setSides(List<Polygon> sides){
-        this.sides = sides;
+        sides.forEach(side -> this.sides.addAll(Triangulator.triangule(side)));
     }
 
     public List<Line> getLines(){
