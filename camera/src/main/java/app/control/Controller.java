@@ -84,6 +84,9 @@ public class Controller extends Application implements Configuration {
                     case SPACE:
                         objects.forEach(o -> o.moveY(MOVE_INC));
                         break;
+                    case SHIFT:
+                        objects.forEach(o -> o.moveY(-MOVE_INC));
+                        break;
                     case UP:
                         objects.forEach(o -> o.rotateOX(-ANGLE_INC));
                         break;

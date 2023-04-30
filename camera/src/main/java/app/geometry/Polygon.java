@@ -8,7 +8,7 @@ import lombok.Getter;
 
 public class Polygon {
     @Getter
-    private int nmbOfPoints;
+    protected int nmbOfPoints;
     @Getter
     protected List<Edge> edges = new ArrayList<>();
 

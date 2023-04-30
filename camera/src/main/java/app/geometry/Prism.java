@@ -44,7 +44,6 @@ public class Prism extends Figure {
         double y = (Y.getY() + X.getY())/2;
         double z = (Y.getZ() + X.getZ())/2;
 
-        this.setInternal(new Point(x, y, z));
-        
+        this.setReference(new Point(x, y, z));
     }
 }

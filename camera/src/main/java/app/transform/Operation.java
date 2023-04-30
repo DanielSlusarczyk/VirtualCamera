@@ -6,30 +6,31 @@ import java.util.List;
 import app.geometry.Edge;
 import app.geometry.Point;
 import app.geometry.Polygon;
+import app.geometry.Triangle;
 
 public class Operation {
-    public static List<Polygon> triangule(Polygon input) {
+    public static List<Triangle> triangule(Polygon input) {
         List<Edge> edges = input.getEdges();
 
         if (edges.size() != 4) {
             System.out.println("Only 4 edges");
         }
 
-        List<Polygon> tringulation = new ArrayList<>();
+        List<Triangle> triangulation = new ArrayList<>();
 
-        tringulation.add(
-                new Polygon(3)
+        triangulation.add(
+                new Triangle()
                         .add(edges.get(0).getA())
                         .add(edges.get(1).getA())
                         .add(edges.get(2).getA()));
 
-        tringulation.add(
-                new Polygon(3)
+        triangulation.add(
+                new Triangle()
                         .add(edges.get(2).getA())
                         .add(edges.get(3).getA())
                         .add(edges.get(0).getA()));
 
-        return tringulation;
+        return triangulation;
     }
 
     public static Point crossProduct(Point a, Point b) {
