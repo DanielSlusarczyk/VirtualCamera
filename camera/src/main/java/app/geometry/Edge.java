@@ -19,4 +19,18 @@ public class Edge {
     public String toString(){
         return "[Edge][ " + A + " -> " + B + " ]";
     }
+
+    public Point getReversedVector(){
+        Point vector = getVector();
+
+        vector.setMatrix(vector.getMatrix().negative());
+
+        return vector;
+    }
+
+    public Point getVector(){
+        Point vector = new Point (B.getMatrix().minus(A.getMatrix()));
+
+        return vector;
+    }
 }

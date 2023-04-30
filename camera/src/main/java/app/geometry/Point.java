@@ -17,6 +17,11 @@ public class Point {
     public Point(SimpleMatrix matrix) {
         this.matrix = matrix;
     }
+    
+    public Point(SimpleMatrix matrix, double w) {
+        this.matrix = matrix;
+        setW(w);
+    }
 
     public double getX() {
         return matrix.get(0, 0);

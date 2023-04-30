@@ -10,7 +10,7 @@ public class Polygon {
     @Getter
     private int nmbOfPoints;
     @Getter
-    private List<Edge> edges = new ArrayList<>();
+    protected List<Edge> edges = new ArrayList<>();
 
     public Polygon(int nmbOfPoints) {
         this.nmbOfPoints = nmbOfPoints;
@@ -44,6 +44,10 @@ public class Polygon {
         }
 
         return this;
+    }
+
+    public Point getPoint(int index){
+        return edges.get(index).getA();
     }
 
     public Stream<Edge> getEdgeStream() {

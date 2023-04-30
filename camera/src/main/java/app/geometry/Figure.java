@@ -6,17 +6,20 @@ import java.util.List;
 import app.config.Configuration;
 import app.control.Movement;
 import app.control.View;
-import app.transform.Triangulator;
+import app.transform.Operation;
 import javafx.scene.shape.Line;
 import lombok.Getter;
+import lombok.Setter;
 
 public class Figure implements Configuration{
     @Getter
     private List<Polygon> sides = new ArrayList<>();
     protected View view;
+    @Setter
+    protected Point internal;
 
     public void setSides(List<Polygon> sides){
-        sides.forEach(side -> this.sides.addAll(Triangulator.triangule(side)));
+        sides.forEach(side -> this.sides.addAll(Operation.triangule(side)));
     }
 
     public List<Line> getLines(){
@@ -72,4 +75,5 @@ public class Figure implements Configuration{
     public void description(){
         sides.stream().flatMap(Polygon::getPointsStream).forEach(p -> System.out.println(p));
     }
+
 }
