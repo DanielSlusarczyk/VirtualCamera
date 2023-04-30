@@ -11,4 +11,6 @@ public interface Configuration {
     double ZOOM_INC = 1.0;
 
     Point VIEW_POINT = new Point(0, 0, 0);
+
+    boolean HIDE_BACKWARDS = false;
 }

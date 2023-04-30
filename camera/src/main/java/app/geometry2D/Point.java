@@ -57,6 +57,6 @@ public class Point {
 
     @Override
     public String toString(){
-        return "[Point][" + matrix.get(0, 0) + " " + matrix.get(1, 0) + " " + matrix.get(2, 0) +  "]";
+        return "[Point][" + getX() + " " + getY() + " " + getZ() +  "] (" + getW() + ")";
     }
 }

@@ -10,14 +10,14 @@ public class Launcher {
 
         //Triangle t = new Triangle();
         //t.add(
-        //    new Point(1, 1, 3)
+        //    new Point(9.51, -36.18, 143.09)
         //).add(
-        //    new Point(5, 10, 6)
+        //    new Point(11.75, -36.18, 150)
         //).add(
-        //    new Point(-2, 4, 2)
+        //    new Point(5.00, -39.02, 146.37)
         //);
 //
-        //t.norm(new Point(0, 0, 10));
+        //t.norm(new Point(0, -20, 150));
 //
         //System.out.println(t.getNormalVector());
 //

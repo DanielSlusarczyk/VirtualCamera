@@ -11,12 +11,17 @@ import app.geometry2D.Triangle;
 public class Operation {
     public static List<Triangle> triangule(Polygon input) {
         List<Edge> edges = input.getEdges();
-
-        if (edges.size() != 4) {
-            System.out.println("Only 4 edges");
-        }
-
         List<Triangle> triangulation = new ArrayList<>();
+
+        if (edges.size() == 3) {
+            triangulation.add(
+                    new Triangle()
+                            .add(input.getPoint(0))
+                            .add(input.getPoint(1))
+                            .add(input.getPoint(2)));
+
+            return triangulation;
+        }
 
         triangulation.add(
                 new Triangle()

@@ -9,6 +9,7 @@ import app.config.Configuration;
 import app.geometry2D.Point;
 import app.geometry3D.Figure;
 import app.geometry3D.Prism;
+import app.geometry3D.Sphere;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -25,8 +26,9 @@ public class Controller extends Application implements Configuration {
     Map<KeyCode, Boolean> pressedButtons = new HashMap<>();
 
     private void addObjects() {
-        objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0), view));
-        objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0), view));
+        //objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0), view));
+        //objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0), view));
+        objects.add(new Sphere(new Point(0, 0, 20), 20, 5, view));
 
         initObjects();
     }

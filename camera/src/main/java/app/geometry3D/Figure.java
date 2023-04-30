@@ -31,6 +31,8 @@ public class Figure implements Configuration{
     public List<Line> getLines(){
         List<Line> toDraw = new ArrayList<>();
 
+        System.out.println("Reference: " + reference);
+
         sides.stream().filter(side -> side.isVisible()).flatMap(Triangle::getEdgeStream).forEach(edge ->{
             Point A = view.projectPoint(edge.getA());
             Point B = view.projectPoint(edge.getB());

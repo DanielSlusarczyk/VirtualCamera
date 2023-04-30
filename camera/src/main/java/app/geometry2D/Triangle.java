@@ -21,7 +21,17 @@ public class Triangle extends Polygon implements Configuration {
     public boolean isVisible() {
         Point viewVector = new Point(VIEW_POINT.getMatrix().minus(getPoint(0).getMatrix()));
 
-        return normalVector.getMatrix().dot(viewVector.getMatrix()) > 0;
+        if(HIDE_BACKWARDS){
+            boolean result = normalVector.getMatrix().dot(viewVector.getMatrix()) > 0;
+            if(!result){
+                this.introduce();
+                System.out.println("Normalny: " + normalVector);
+            }
+
+            return result;
+        } else {
+            return true;
+        }
     }
 
     public void norm(Point reference) {
