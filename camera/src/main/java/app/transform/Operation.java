@@ -3,10 +3,10 @@ package app.transform;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.geometry.Edge;
-import app.geometry.Point;
-import app.geometry.Polygon;
-import app.geometry.Triangle;
+import app.geometry2D.Edge;
+import app.geometry2D.Point;
+import app.geometry2D.Polygon;
+import app.geometry2D.Triangle;
 
 public class Operation {
     public static List<Triangle> triangule(Polygon input) {

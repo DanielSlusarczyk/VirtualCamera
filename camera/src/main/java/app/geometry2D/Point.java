@@ -1,4 +1,4 @@
-package app.geometry;
+package app.geometry2D;
 
 import org.ejml.simple.SimpleMatrix;
 

@@ -1,4 +1,4 @@
-package app.geometry;
+package app.geometry3D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,9 @@ import java.util.List;
 import app.config.Configuration;
 import app.control.Movement;
 import app.control.View;
+import app.geometry2D.Point;
+import app.geometry2D.Polygon;
+import app.geometry2D.Triangle;
 import app.transform.Operation;
 import javafx.scene.shape.Line;
 import lombok.Getter;

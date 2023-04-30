@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import app.config.Configuration;
-import app.geometry.Figure;
-import app.geometry.Point;
-import app.geometry.Prism;
+import app.geometry2D.Point;
+import app.geometry3D.Figure;
+import app.geometry3D.Prism;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;

@@ -3,7 +3,7 @@ package app.control;
 import org.ejml.simple.SimpleMatrix;
 
 import app.config.Configuration;
-import app.geometry.Point;
+import app.geometry2D.Point;
 
 public class Movement implements Configuration{
 

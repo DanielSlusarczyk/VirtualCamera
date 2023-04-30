@@ -1,9 +1,11 @@
-package app.geometry;
+package app.geometry3D;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.control.View;
+import app.geometry2D.Point;
+import app.geometry2D.Polygon;
 
 public class Prism extends Figure {
 

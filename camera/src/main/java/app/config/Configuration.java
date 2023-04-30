@@ -1,6 +1,6 @@
 package app.config;
 
-import app.geometry.Point;
+import app.geometry2D.Point;
 
 public interface Configuration {
     double WINDOW_WIDTH = 640;

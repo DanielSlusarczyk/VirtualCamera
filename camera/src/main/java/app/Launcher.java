@@ -1,8 +1,8 @@
 package app;
 
 import app.control.Controller;
-import app.geometry.Point;
-import app.geometry.Triangle;
+import app.geometry2D.Point;
+import app.geometry2D.Triangle;
 
 public class Launcher {
     public static void main(String[] args) {

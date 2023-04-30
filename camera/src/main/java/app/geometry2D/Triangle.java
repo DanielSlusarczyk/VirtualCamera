@@ -1,4 +1,4 @@
-package app.geometry;
+package app.geometry2D;
 
 import app.config.Configuration;
 import app.transform.Operation;
