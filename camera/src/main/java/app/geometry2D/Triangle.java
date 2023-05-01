@@ -22,13 +22,7 @@ public class Triangle extends Polygon implements Configuration {
         Point viewVector = new Point(VIEW_POINT.getMatrix().minus(getPoint(0).getMatrix()));
 
         if(HIDE_BACKWARDS){
-            boolean result = normalVector.getMatrix().dot(viewVector.getMatrix()) > 0;
-            if(!result){
-                this.introduce();
-                System.out.println("Normalny: " + normalVector);
-            }
-
-            return result;
+            return normalVector.getMatrix().dot(viewVector.getMatrix()) > 0;
         } else {
             return true;
         }
@@ -43,8 +37,7 @@ public class Triangle extends Polygon implements Configuration {
 
         Point testPoint = new Point(getPoint(0).getMatrix().plus(plane.getMatrix()), 0);
 
-        if (reference.getMatrix().transpose().mult(plane.getMatrix()).get(0)
-                * testPoint.getMatrix().transpose().mult(plane.getMatrix()).get(0) > 0) {
+        if (value(reference, plane) * value(testPoint, plane) > 0) {
             Point A = getPoint(0);
             Point B = getPoint(1);
             Point C = getPoint(2);
@@ -60,19 +53,18 @@ public class Triangle extends Polygon implements Configuration {
     }
 
     public Edge normalVectorToPrint(){
-        Point center = new Point(
-            getPoint(0).getMatrix().plus(getPoint(1).getMatrix()).plus(getPoint(2).getMatrix())
-        );
-        System.out.println(getPoint(0));
-        System.out.println(getPoint(1));
-        System.out.println(getPoint(2));
-        System.out.println("SUMA: " + getPoint(0).getMatrix().plus(getPoint(1).getMatrix()).plus(getPoint(2).getMatrix()).scale(1/3));
-
-
-        System.out.println(center);
+        Point center = new Point(getPoint(0).getMatrix().plus(getPoint(1).getMatrix()).plus(getPoint(2).getMatrix()));
 
         Point vector = new Point(center.getMatrix().plus(normalVector.getMatrix()));
 
+        double scalar = 1/(center.getMatrix().minus(vector.getMatrix()).elementPower(2).elementSum());
+
+        vector.setMatrix(vector.getMatrix().scale(scalar));
+
         return new Edge(center, vector);
+    }
+
+    private double value(Point point, Point plane){
+        return point.getMatrix().transpose().mult(plane.getMatrix()).get(0);
     }
 }

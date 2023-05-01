@@ -31,13 +31,12 @@ public class Sphere extends Figure {
 
         for (int i = 0; i < factor - 2; i++) {
             for (int j = 0; j < factor; j++) {
-                int rightIndex = j + 1 >= map[i].length ? 0 : j + 1;
-                int upperIndex = i + 1 >= map.length ? 0 : i + 1;
+                int rightIndex = (j + 1) % map[i].length;
 
                 Point A = map[i][j];
                 Point B = map[i][rightIndex];
-                Point C = map[upperIndex][j];
-                Point D = map[upperIndex][rightIndex];
+                Point C = map[i+1][rightIndex];
+                Point D = map[i+1][j];
 
                 sides.add(new Polygon(4).add(A).add(B).add(C).add(D));
             }

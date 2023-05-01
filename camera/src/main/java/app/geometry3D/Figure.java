@@ -6,6 +6,7 @@ import java.util.List;
 import app.config.Configuration;
 import app.control.Movement;
 import app.control.View;
+import app.geometry2D.Edge;
 import app.geometry2D.Point;
 import app.geometry2D.Polygon;
 import app.geometry2D.Triangle;
@@ -31,8 +32,6 @@ public class Figure implements Configuration{
     public List<Line> getLines(){
         List<Line> toDraw = new ArrayList<>();
 
-        System.out.println("Reference: " + reference);
-
         sides.stream().filter(side -> side.isVisible()).flatMap(Triangle::getEdgeStream).forEach(edge ->{
             Point A = view.projectPoint(edge.getA());
             Point B = view.projectPoint(edge.getB());
@@ -40,6 +39,17 @@ public class Figure implements Configuration{
             Line line = new Line(A.getX(), A.getY(), B.getX(), B.getY());
             toDraw.add(line);
         });
+        
+        if(!HIDE_NORMAL_VECTORS){
+            sides.stream().filter(side -> side.isVisible()).forEach(side ->{
+                Edge E = side.normalVectorToPrint();
+                Point A = view.projectPoint(E.getA());
+                Point B = view.projectPoint(E.getB());
+    
+                Line line = new Line(A.getX(), A.getY(), B.getX(), B.getY());
+                toDraw.add(line);
+            });
+        }
 
         return toDraw;
     }

@@ -10,6 +10,10 @@ public class Point {
     @Setter
     private SimpleMatrix matrix;
 
+    public Point(double x, double y, double z, double w) {
+        this.matrix = new SimpleMatrix(new double[][] { { x }, { y }, { z }, { w } });
+    }
+
     public Point(double x, double y, double z) {
         this.matrix = new SimpleMatrix(new double[][] { { x }, { y }, { z }, { 1.0 } });
     }
@@ -57,6 +61,6 @@ public class Point {
 
     @Override
     public String toString(){
-        return "[Point][" + getX() + " " + getY() + " " + getZ() +  "] (" + getW() + ")";
+        return "[Point](" + getX() + ", " + getY() + ", " + getZ() +  ") (" + getW() + ")";
     }
 }

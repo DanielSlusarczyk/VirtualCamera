@@ -13,4 +13,5 @@ public interface Configuration {
     Point VIEW_POINT = new Point(0, 0, 0);
 
     boolean HIDE_BACKWARDS = false;
+    boolean HIDE_NORMAL_VECTORS = false;
 }
