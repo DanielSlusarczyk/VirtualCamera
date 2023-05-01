@@ -48,4 +48,10 @@ public class Operation {
 
         return crossProduct;
     }
+
+    public static Point scale(Point a){
+        // Norma Frobeniusa dla jednego wiersza jest równa drugiej normie.
+
+        return new Point(a.getMatrix().scale(1/a.getMatrix().transpose().normF()));
+    }
 }

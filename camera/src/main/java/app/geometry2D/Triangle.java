@@ -46,6 +46,29 @@ public class Triangle extends Side implements Configuration {
         normalVector.setW(0);
     }
 
+    public double getPhongScalar(){
+        Point center = getCenter();
+        Point N = Operation.scale(normalVector);
+        Point V = Operation.scale(new Point(center.getMatrix().negative()));
+        // R = (2*N.L)*N - L
+        Point R = Operation.scale(new Point(N.getMatrix().scale(2 * LIGHT.getMatrix().dot(N.getMatrix())).minus(LIGHT.getMatrix())));
+        Point L = Operation.scale(new Point(LIGHT.getMatrix().minus(center.getMatrix())));
+
+        //System.out.println("N: " + N);
+        //System.out.println("V: " + V);
+        //System.out.println("R: " + R);
+        //System.out.println("L: " + L);
+
+        double ambient = K_a;
+        double diffuse = K_d * N.getMatrix().dot(L.getMatrix());
+        double specular = K_s * Math.pow(Math.max(0.0, R.getMatrix().dot(V.getMatrix())), alpha);
+
+        //System.out.println(R.getMatrix().dot(V.getMatrix()));
+        //System.out.println("S: " + specular);
+
+        return Math.min(1.0, ambient + diffuse + specular);
+    }
+
     private void setNormalVector(){
         Point ab_vector = edges.get(0).getVector();
         Point ac_vector = edges.get(2).getReversedVector();
@@ -59,5 +82,9 @@ public class Triangle extends Side implements Configuration {
             point.getY() * plane.getY() +
             point.getZ() * plane.getZ() +
             plane.getW();
+    }
+
+    public Point getCenter(){
+        return new Point(getPoint(0).getMatrix().plus(getPoint(1).getMatrix()).plus(getPoint(2).getMatrix()).scale(1.0/3.0), 0);
     }
 }
