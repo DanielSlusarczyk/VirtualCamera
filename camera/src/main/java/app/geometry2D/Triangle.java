@@ -65,6 +65,10 @@ public class Triangle extends Polygon implements Configuration {
     }
 
     private double value(Point point, Point plane){
-        return point.getMatrix().transpose().mult(plane.getMatrix()).get(0);
+        return 
+            point.getX() * plane.getX() +
+            point.getY() * plane.getY() +
+            point.getZ() * plane.getZ() +
+            plane.getW();
     }
 }
