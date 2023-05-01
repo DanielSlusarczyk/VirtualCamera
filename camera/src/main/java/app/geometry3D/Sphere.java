@@ -5,7 +5,7 @@ import java.util.List;
 
 import app.control.View;
 import app.geometry2D.Point;
-import app.geometry2D.Polygon;
+import app.geometry2D.Side;
 import app.geometry2D.Triangle;
 
 public class Sphere extends Figure {
@@ -27,7 +27,7 @@ public class Sphere extends Figure {
                 map[i - 1][j] = new Point(x, y, z);
             }
         }
-        List<Polygon> sides = new ArrayList<>();
+        List<Side> sides = new ArrayList<>();
 
         for (int i = 0; i < factor - 2; i++) {
             for (int j = 0; j < factor; j++) {
@@ -38,7 +38,7 @@ public class Sphere extends Figure {
                 Point C = map[i+1][rightIndex];
                 Point D = map[i+1][j];
 
-                sides.add(new Polygon(4).add(A).add(B).add(C).add(D));
+                sides.add(new Side(4).add(A).add(B).add(C).add(D));
             }
         }
 

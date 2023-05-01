@@ -34,7 +34,7 @@ public class Controller extends Application implements Configuration {
 
     private void initObjects() {
         objects.forEach(o -> {
-            mainPane.getChildren().addAll(o.rotateOX(90).moveZ(150).getLines());
+            mainPane.getChildren().addAll(o.rotateOX(90).moveZ(150).getDrawable());
         });
 
         scene.setOnKeyPressed(event -> {
@@ -60,7 +60,7 @@ public class Controller extends Application implements Configuration {
                 handleButton();
 
                 mainPane.getChildren().clear();
-                objects.forEach(o -> mainPane.getChildren().addAll(o.getLines()));
+                objects.forEach(o -> mainPane.getChildren().addAll(o.getDrawable()));
             }
         };
         System.out.println("[INFO] Timer start...");

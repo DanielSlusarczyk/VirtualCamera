@@ -4,7 +4,7 @@ import app.config.Configuration;
 import app.transform.Operation;
 import lombok.Getter;
 
-public class Triangle extends Polygon implements Configuration {
+public class Triangle extends Side implements Configuration {
     @Getter
     private Point normalVector;
 

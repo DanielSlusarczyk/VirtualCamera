@@ -5,7 +5,7 @@ import java.util.List;
 
 import app.control.View;
 import app.geometry2D.Point;
-import app.geometry2D.Polygon;
+import app.geometry2D.Side;
 
 public class Prism extends Figure {
 
@@ -31,13 +31,13 @@ public class Prism extends Figure {
         Point G = new Point(Y.getX(), Y.getY(), Y.getZ());
         Point H = new Point(X.getX(), Y.getY(), Y.getZ()); 
 
-        List<Polygon> sides = new ArrayList<>(){{
-            add(new Polygon(4).add(A).add(B).add(C).add(D));
-            add(new Polygon(4).add(A).add(B).add(F).add(E));
-            add(new Polygon(4).add(B).add(C).add(G).add(F));
-            add(new Polygon(4).add(E).add(F).add(G).add(H));
-            add(new Polygon(4).add(D).add(C).add(G).add(H));
-            add(new Polygon(4).add(A).add(D).add(H).add(E));
+        List<Side> sides = new ArrayList<>(){{
+            add(new Side(4).add(A).add(B).add(C).add(D));
+            add(new Side(4).add(A).add(B).add(F).add(E));
+            add(new Side(4).add(B).add(C).add(G).add(F));
+            add(new Side(4).add(E).add(F).add(G).add(H));
+            add(new Side(4).add(D).add(C).add(G).add(H));
+            add(new Side(4).add(A).add(D).add(H).add(E));
         }};
         
         this.setSides(sides);

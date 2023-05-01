@@ -5,11 +5,11 @@ import java.util.List;
 
 import app.geometry2D.Edge;
 import app.geometry2D.Point;
-import app.geometry2D.Polygon;
+import app.geometry2D.Side;
 import app.geometry2D.Triangle;
 
 public class Operation {
-    public static List<Triangle> triangule(Polygon input) {
+    public static List<Triangle> triangule(Side input) {
         List<Edge> edges = input.getEdges();
         List<Triangle> triangulation = new ArrayList<>();
 

@@ -6,17 +6,17 @@ import java.util.stream.Stream;
 
 import lombok.Getter;
 
-public class Polygon {
+public class Side {
     @Getter
     protected int nmbOfPoints;
     @Getter
     protected List<Edge> edges = new ArrayList<>();
 
-    public Polygon(int nmbOfPoints) {
+    public Side(int nmbOfPoints) {
         this.nmbOfPoints = nmbOfPoints;
     }
 
-    public Polygon add(Point point) {
+    public Side add(Point point) {
         Point newPoint = new Point(point.getMatrix());
 
         if (edges.size() == 0) {
