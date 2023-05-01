@@ -8,7 +8,6 @@ import java.util.Map;
 import app.config.Configuration;
 import app.geometry2D.Point;
 import app.geometry3D.Figure;
-import app.geometry3D.Prism;
 import app.geometry3D.Sphere;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -28,7 +27,7 @@ public class Controller extends Application implements Configuration {
     private void addObjects() {
         //objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0), view));
         //objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0), view));
-        objects.add(new Sphere(new Point(0, 0, 20), 20, 40, view));
+        objects.add(new Sphere(new Point(0, 0, 20), 20, 30, view));
 
         initObjects();
     }
@@ -50,6 +49,7 @@ public class Controller extends Application implements Configuration {
     @Override
     public void start(Stage stage) {
         addObjects();
+        System.out.println("[INFO] Objects placed");
 
         stage.setScene(scene);
         stage.show();
@@ -63,7 +63,7 @@ public class Controller extends Application implements Configuration {
                 objects.forEach(o -> mainPane.getChildren().addAll(o.getLines()));
             }
         };
-
+        System.out.println("[INFO] Timer start...");
         timer.start();
     }
 
