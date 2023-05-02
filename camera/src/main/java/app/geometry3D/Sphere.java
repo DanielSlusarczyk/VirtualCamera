@@ -9,19 +9,20 @@ import app.geometry2D.Side;
 import app.geometry2D.Triangle;
 
 public class Sphere extends Figure {
-//        , - ~ ~ ~ - ,
-//    , '          /    ' ,
-//  ,             /         ,
-// ,             / r         ,
-//,             /             ,
-//,            .              ,
-//,          center           ,
-// ,                         ,
-//  ,                       ,
-//    ,                  , '
-//      ' - , _ _ _ ,  '
-//
-
+    
+    //        , - ~ ~ ~ - ,
+    //    , '          /    ' ,
+    //  ,             /         ,
+    // ,             / r         ,
+    //,             /             ,
+    //,            .              ,
+    //,          center           ,
+    // ,                         ,
+    //  ,                       ,
+    //    ,                  , '
+    //      ' - , _ _ _ ,  '
+    //
+    // denisty - number of parallels and meridians
 
     public Sphere(Point center, double r, int density, View view) {
         this.view = view;
@@ -31,6 +32,7 @@ public class Sphere extends Figure {
 
         Point[][] map = new Point[density - 1][density];
 
+        // Polar -> Cartesian coordinate system
         for (int i = 1; i < density; i++) {
             for (int j = 0; j < density; j++) {
                 double x = r * Math.cos(i * alphaINC - Math.PI / 2) * Math.cos(j * betaINC) + center.getX();
@@ -42,20 +44,21 @@ public class Sphere extends Figure {
         }
         List<Side> sides = new ArrayList<>();
 
+        // Trapezoid defined by two pararrels and two meridians
         for (int i = 0; i < density - 2; i++) {
             for (int j = 0; j < density; j++) {
                 int rightIndex = (j + 1) % density;
 
                 Point A = map[i][j];
                 Point B = map[i][rightIndex];
-                Point C = map[i+1][rightIndex];
-                Point D = map[i+1][j];
+                Point C = map[i + 1][rightIndex];
+                Point D = map[i + 1][j];
 
                 sides.add(new Side(4).add(A).add(B).add(C).add(D));
             }
         }
 
-        // POSITIVE POLE
+        // Upper pole
         double x = r * Math.cos(Math.PI / 2) * Math.cos(0) + center.getX();
         double y = r * Math.cos(Math.PI / 2) * Math.sin(0) + center.getY();
         double z = r * Math.sin(Math.PI / 2) + center.getZ();
@@ -71,7 +74,7 @@ public class Sphere extends Figure {
             sides.add(new Triangle().add(A).add(B).add(C));
         }
 
-        // NEGATIVE POLE
+        // Bottom pole
         x = r * Math.cos(-Math.PI / 2) * Math.cos(0) + center.getX();
         y = r * Math.cos(-Math.PI / 2) * Math.sin(0) + center.getY();
         z = r * Math.sin(-Math.PI / 2) + center.getZ();
