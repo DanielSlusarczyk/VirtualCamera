@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import app.control.View;
+import javafx.scene.shape.Polygon;
 import lombok.Getter;
 
 public class Side {
@@ -60,5 +62,18 @@ public class Side {
 
     public void introduce(){
         edges.forEach(edge -> System.out.println(edge));
+    }
+
+    public Polygon mapToPolygon(View view){
+        double[] coords = new double[edges.size() * 2];
+
+        for(int i = 0; i < edges.size(); i++){
+            Point P = view.projectPoint(edges.get(i).getA());
+            
+            coords[2 * i] = P.getX();
+            coords[2 * i + 1] = P.getY();
+        }
+
+        return new Polygon(coords);
     }
 }

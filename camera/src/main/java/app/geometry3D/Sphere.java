@@ -30,7 +30,7 @@ public class Sphere extends Figure {
         double alphaINC = Math.PI / density;
         double betaINC = 2 * Math.PI / density;
 
-        Point[][] map = new Point[density - 1][density];
+        Point[][] mesh = new Point[density - 1][density];
 
         // Polar -> Cartesian coordinate system
         for (int i = 1; i < density; i++) {
@@ -39,7 +39,7 @@ public class Sphere extends Figure {
                 double y = r * Math.cos(i * alphaINC - Math.PI / 2) * Math.sin(j * betaINC) + center.getY();
                 double z = r * Math.sin(i * alphaINC - Math.PI / 2) + center.getZ();
 
-                map[i - 1][j] = new Point(x, y, z);
+                mesh[i - 1][j] = new Point(x, y, z);
             }
         }
         List<Side> sides = new ArrayList<>();
@@ -49,10 +49,10 @@ public class Sphere extends Figure {
             for (int j = 0; j < density; j++) {
                 int rightIndex = (j + 1) % density;
 
-                Point A = map[i][j];
-                Point B = map[i][rightIndex];
-                Point C = map[i + 1][rightIndex];
-                Point D = map[i + 1][j];
+                Point A = mesh[i][j];
+                Point B = mesh[i][rightIndex];
+                Point C = mesh[i + 1][rightIndex];
+                Point D = mesh[i + 1][j];
 
                 sides.add(new Side(4).add(A).add(B).add(C).add(D));
             }
@@ -67,8 +67,8 @@ public class Sphere extends Figure {
         for (int i = 0; i < density; i++) {
             int rightIndex = (i + 1) % density;
 
-            Point A = map[density - 2][i];
-            Point B = map[density - 2][rightIndex];
+            Point A = mesh[density - 2][i];
+            Point B = mesh[density - 2][rightIndex];
             Point C = positivePole;
 
             sides.add(new Triangle().add(A).add(B).add(C));
@@ -83,8 +83,8 @@ public class Sphere extends Figure {
         for (int i = 0; i < density; i++) {
             int rightIndex = (i + 1) % density;
 
-            Point A = map[0][i];
-            Point B = map[0][rightIndex];
+            Point A = mesh[0][i];
+            Point B = mesh[0][rightIndex];
             Point C = negativePole;
 
             sides.add(new Triangle().add(A).add(B).add(C));

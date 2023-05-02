@@ -11,7 +11,6 @@ import app.geometry2D.Side;
 import app.geometry2D.Triangle;
 import app.transform.Operation;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 import lombok.Getter;
@@ -32,19 +31,13 @@ public class Figure implements Configuration {
     }
 
     public List<Shape> getDrawable() {
-        return SET_FILL ? getPolygons() : getLines();
+        return FILL_RGB != null ? getPolygons() : getLines();
     }
 
     public List<Shape> getLines() {
         List<Shape> toDraw = new ArrayList<>();
 
-        sides.stream().filter(side -> side.isVisible()).flatMap(Triangle::getEdgeStream).forEach(edge -> {
-            Point A = view.projectPoint(edge.getA());
-            Point B = view.projectPoint(edge.getB());
-
-            Line line = new Line(A.getX(), A.getY(), B.getX(), B.getY());
-            toDraw.add(line);
-        });
+        sides.stream().filter(side -> side.isVisible()).flatMap(Triangle::getEdgeStream).forEach(edge -> toDraw.add(edge.mapToLine(view)));
 
         return toDraw;
     }
@@ -53,19 +46,12 @@ public class Figure implements Configuration {
         List<Shape> toDraw = new ArrayList<>();
 
         sides.stream().filter(side -> side.isVisible()).forEach(triangle -> {
-            Point A = view.projectPoint(triangle.getPoint(0));
-            Point B = view.projectPoint(triangle.getPoint(1));
-            Point C = view.projectPoint(triangle.getPoint(2));
-
-            Polygon polygon = new Polygon(new double[] {
-                    A.getX(), A.getY(),
-                    B.getX(), B.getY(),
-                    C.getX(), C.getY()
-            });
+            Polygon polygon = triangle.mapToPolygon(view);
         
+            // Phong reflecion model
             double phong = triangle.getPhongScalar();
 
-            polygon.setFill(Color.rgb((int)(Color_R * phong), (int)(Color_G * phong), (int)(Color_B * phong)));
+            polygon.setFill(Color.rgb((int)(FILL_RGB.getX() * phong), (int)(FILL_RGB.getY() * phong), (int)(FILL_RGB.getZ() * phong), FILL_RGB.getW()));
             polygon.setStroke(polygon.getFill());
 
             toDraw.add(polygon);
@@ -77,7 +63,6 @@ public class Figure implements Configuration {
     public Figure rotateOX(double angle) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.rotatePointOX(p, angle));
         Movement.rotatePointOX(reference, angle);
-        Movement.rotatePointOX(LIGHT, angle);
 
         return this;
     }
@@ -85,7 +70,6 @@ public class Figure implements Configuration {
     public Figure rotateOY(double angle) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.rotatePointOY(p, angle));
         Movement.rotatePointOY(reference, angle);
-        Movement.rotatePointOY(LIGHT, angle);
 
         return this;
     }
@@ -93,7 +77,6 @@ public class Figure implements Configuration {
     public Figure rotateOZ(double angle) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.rotatePointOZ(p, angle));
         Movement.rotatePointOZ(reference, angle);
-        Movement.rotatePointOZ(LIGHT, angle);
 
         return this;
     }
@@ -101,7 +84,6 @@ public class Figure implements Configuration {
     public Figure moveX(double x) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.move(p, x, 0.0, 0.0));
         Movement.move(reference, x, 0.0, 0.0);
-        Movement.move(LIGHT, x, 0.0, 0.0);
 
         return this;
     }
@@ -109,7 +91,6 @@ public class Figure implements Configuration {
     public Figure moveY(double x) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.move(p, 0.0, x, 0.0));
         Movement.move(reference, 0.0, x, 0.0);
-        Movement.move(LIGHT, 0.0, x, 0.0);
 
         return this;
     }
@@ -117,7 +98,6 @@ public class Figure implements Configuration {
     public Figure moveZ(double x) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.move(p, 0.0, 0.0, x));
         Movement.move(reference, 0.0, 0.0, x);
-        Movement.move(LIGHT, 0.0, 0.0, x);
 
         return this;
     }

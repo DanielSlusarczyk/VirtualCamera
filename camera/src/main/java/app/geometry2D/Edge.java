@@ -2,6 +2,8 @@ package app.geometry2D;
 
 import java.util.stream.Stream;
 
+import app.control.View;
+import javafx.scene.shape.Line;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -32,5 +34,12 @@ public class Edge {
         Point vector = new Point (B.getMatrix().minus(A.getMatrix()));
 
         return vector;
+    }
+
+    public Line mapToLine(View view){
+        Point PA = view.projectPoint(A);
+        Point PB = view.projectPoint(B);
+
+        return new Line(PA.getX(), PA.getY(), PB.getX(), PB.getY());
     }
 }

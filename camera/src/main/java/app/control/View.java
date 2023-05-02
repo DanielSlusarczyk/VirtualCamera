@@ -27,7 +27,7 @@ public class View implements Configuration {
     }
 
     public void changeFov(double value){
-        fov = fov + value > 0.0 && fov + value < 180.0 ? fov + value : fov;
+        fov = Math.min(179.9, Math.max(0.1, fov + value));
 
         this.projectionMatrix = defineProjectionMatrix();
     }

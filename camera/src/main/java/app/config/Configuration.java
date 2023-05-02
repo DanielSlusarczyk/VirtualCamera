@@ -17,9 +17,6 @@ public interface Configuration {
     double K_d = 0.25;
     double alpha = 50;
 
-    boolean SET_FILL = true;
-
-    double Color_R = 48.0;
-    double Color_G = 137.0;
-    double Color_B = 227.0;
+    // FILL_RGB = null - only grid
+    Point FILL_RGB = new Point(48.0, 137.0, 227.0, 1);
 }

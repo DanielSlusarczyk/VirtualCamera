@@ -25,9 +25,9 @@ public class Controller extends Application implements Configuration {
     Map<KeyCode, Boolean> pressedButtons = new HashMap<>();
 
     private void addObjects() {
-        //objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0), view));
-        //objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0), view));
-        objects.add(new Sphere(new Point(0, 0, 20), 20, 10, view));
+        // objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0),view));
+        // objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0),view));
+        objects.add(new Sphere(new Point(0, 0, 20), 10, 50, view));
 
         initObjects();
     }
@@ -36,6 +36,9 @@ public class Controller extends Application implements Configuration {
         objects.forEach(o -> {
             mainPane.getChildren().addAll(o.rotateOX(90).moveZ(150).getDrawable());
         });
+
+        Movement.rotatePointOX(LIGHT, 90);
+        Movement.move(LIGHT, 0.0, 0.0, 150.0);
 
         scene.setOnKeyPressed(event -> {
             pressedButtons.put(event.getCode(), true);
@@ -71,41 +74,53 @@ public class Controller extends Application implements Configuration {
         pressedButtons.forEach((button, pressed) -> {
             if (pressed) {
                 switch (button) {
-                    case W:
-                        objects.forEach(o -> o.moveZ(-MOVE_INC));
-                        break;
-                    case S:
-                        objects.forEach(o -> o.moveZ(MOVE_INC));
-                        break;
                     case A:
                         objects.forEach(o -> o.moveX(MOVE_INC));
+                        Movement.move(LIGHT, MOVE_INC, 0.0, 0.0);
                         break;
                     case D:
                         objects.forEach(o -> o.moveX(-MOVE_INC));
+                        Movement.move(LIGHT, -MOVE_INC, 0.0, 0.0);
+                        break;
+                    case S:
+                        objects.forEach(o -> o.moveZ(MOVE_INC));
+                        Movement.move(LIGHT, 0.0, 0.0, MOVE_INC);
+                        break;
+                    case W:
+                        objects.forEach(o -> o.moveZ(-MOVE_INC));
+                        Movement.move(LIGHT, 0.0, 0.0, -MOVE_INC);
                         break;
                     case SPACE:
                         objects.forEach(o -> o.moveY(MOVE_INC));
+                        Movement.move(LIGHT, 0.0, MOVE_INC, 0.0);
                         break;
                     case SHIFT:
                         objects.forEach(o -> o.moveY(-MOVE_INC));
+                        Movement.move(LIGHT, 0.0, -MOVE_INC, 0.0);
                         break;
                     case UP:
                         objects.forEach(o -> o.rotateOX(-ANGLE_INC));
+                        Movement.rotatePointOX(LIGHT, -ANGLE_INC);
                         break;
                     case DOWN:
                         objects.forEach(o -> o.rotateOX(ANGLE_INC));
+                        Movement.rotatePointOX(LIGHT, ANGLE_INC);
                         break;
                     case LEFT:
                         objects.forEach(o -> o.rotateOY(ANGLE_INC));
+                        Movement.rotatePointOY(LIGHT, ANGLE_INC);
                         break;
                     case RIGHT:
                         objects.forEach(o -> o.rotateOY(-ANGLE_INC));
+                        Movement.rotatePointOY(LIGHT, -ANGLE_INC);
                         break;
                     case Q:
                         objects.forEach(o -> o.rotateOZ(ANGLE_INC));
+                        Movement.rotatePointOZ(LIGHT, ANGLE_INC);
                         break;
                     case E:
                         objects.forEach(o -> o.rotateOZ(-ANGLE_INC));
+                        Movement.rotatePointOZ(LIGHT, -ANGLE_INC);
                         break;
                     case Z:
                         view.changeFov(ZOOM_INC);

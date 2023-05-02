@@ -54,17 +54,9 @@ public class Triangle extends Side implements Configuration {
         Point R = Operation.scale(new Point(N.getMatrix().scale(2 * LIGHT.getMatrix().dot(N.getMatrix())).minus(LIGHT.getMatrix())));
         Point L = Operation.scale(new Point(LIGHT.getMatrix().minus(center.getMatrix())));
 
-        //System.out.println("N: " + N);
-        //System.out.println("V: " + V);
-        //System.out.println("R: " + R);
-        //System.out.println("L: " + L);
-
         double ambient = K_a;
         double diffuse = K_d * N.getMatrix().dot(L.getMatrix());
         double specular = K_s * Math.pow(Math.max(0.0, R.getMatrix().dot(V.getMatrix())), alpha);
-
-        //System.out.println(R.getMatrix().dot(V.getMatrix()));
-        //System.out.println("S: " + specular);
 
         return Math.min(1.0, ambient + diffuse + specular);
     }
