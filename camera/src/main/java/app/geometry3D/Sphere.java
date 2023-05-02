@@ -9,17 +9,30 @@ import app.geometry2D.Side;
 import app.geometry2D.Triangle;
 
 public class Sphere extends Figure {
+//        , - ~ ~ ~ - ,
+//    , '          /    ' ,
+//  ,             /         ,
+// ,             / r         ,
+//,             /             ,
+//,            .              ,
+//,          center           ,
+// ,                         ,
+//  ,                       ,
+//    ,                  , '
+//      ' - , _ _ _ ,  '
+//
 
-    public Sphere(Point center, double r, int factor, View view) {
+
+    public Sphere(Point center, double r, int density, View view) {
         this.view = view;
 
-        double alphaINC = Math.PI / factor;
-        double betaINC = 2 * Math.PI / factor;
+        double alphaINC = Math.PI / density;
+        double betaINC = 2 * Math.PI / density;
 
-        Point[][] map = new Point[factor - 1][factor];
+        Point[][] map = new Point[density - 1][density];
 
-        for (int i = 1; i < factor; i++) {
-            for (int j = 0; j < factor; j++) {
+        for (int i = 1; i < density; i++) {
+            for (int j = 0; j < density; j++) {
                 double x = r * Math.cos(i * alphaINC - Math.PI / 2) * Math.cos(j * betaINC) + center.getX();
                 double y = r * Math.cos(i * alphaINC - Math.PI / 2) * Math.sin(j * betaINC) + center.getY();
                 double z = r * Math.sin(i * alphaINC - Math.PI / 2) + center.getZ();
@@ -29,9 +42,9 @@ public class Sphere extends Figure {
         }
         List<Side> sides = new ArrayList<>();
 
-        for (int i = 0; i < factor - 2; i++) {
-            for (int j = 0; j < factor; j++) {
-                int rightIndex = (j + 1) % map[i].length;
+        for (int i = 0; i < density - 2; i++) {
+            for (int j = 0; j < density; j++) {
+                int rightIndex = (j + 1) % density;
 
                 Point A = map[i][j];
                 Point B = map[i][rightIndex];
@@ -48,11 +61,11 @@ public class Sphere extends Figure {
         double z = r * Math.sin(Math.PI / 2) + center.getZ();
 
         Point positivePole = new Point(x, y, z);
-        for (int i = 0; i < factor - 1; i++) {
-            int rightIndex = i + 1 >= map[factor - 2].length ? 0 : i + 1;
+        for (int i = 0; i < density; i++) {
+            int rightIndex = (i + 1) % density;
 
-            Point A = map[factor - 2][i];
-            Point B = map[factor - 2][rightIndex];
+            Point A = map[density - 2][i];
+            Point B = map[density - 2][rightIndex];
             Point C = positivePole;
 
             sides.add(new Triangle().add(A).add(B).add(C));
@@ -64,8 +77,8 @@ public class Sphere extends Figure {
         z = r * Math.sin(-Math.PI / 2) + center.getZ();
 
         Point negativePole = new Point(x, y, z);
-        for (int i = 0; i < factor - 1; i++) {
-            int rightIndex = i + 1 >= map[0].length ? 0 : i + 1;
+        for (int i = 0; i < density; i++) {
+            int rightIndex = (i + 1) % density;
 
             Point A = map[0][i];
             Point B = map[0][rightIndex];
