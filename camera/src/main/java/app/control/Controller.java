@@ -21,12 +21,16 @@ public class Controller extends Application implements Configuration {
     private Scene scene = new Scene(mainPane, WINDOW_WIDTH, WINDOW_HEIGHT);
     private List<Figure> objects = new ArrayList<>();
     private View view = new View();
+    private long timeSum = 0;
+    private long frames = 0;
 
     Map<KeyCode, Boolean> pressedButtons = new HashMap<>();
 
     private void addObjects() {
-        // objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0),view));
-        // objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0),view));
+        // objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0,
+        // 20.0),view));
+        // objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0,
+        // 50.0),view));
         objects.add(new Sphere(new Point(0, 0, 20), 10, 50, view));
 
         initObjects();
@@ -60,10 +64,14 @@ public class Controller extends Application implements Configuration {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long timestamp) {
+                long time = System.currentTimeMillis();
+
                 handleButton();
 
                 mainPane.getChildren().clear();
                 objects.forEach(o -> mainPane.getChildren().addAll(o.getDrawable()));
+
+                timeInfo(time);
             }
         };
         System.out.println("[INFO] Timer start...");
@@ -133,6 +141,18 @@ public class Controller extends Application implements Configuration {
                 }
             }
         });
+    }
+
+    private void timeInfo(Long time) {
+        if (AVG_TIME_PER_FRAME) {
+            timeSum += (System.currentTimeMillis() - time);
+            frames++;
+            if (frames % 100 == 0) {
+                System.out.println("Avg time of last 100 frames: " + timeSum / frames);
+                timeSum = 0;
+                frames = 0;
+            }
+        }
     }
 
     public static void run(String[] args) {
