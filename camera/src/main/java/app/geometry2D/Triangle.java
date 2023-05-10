@@ -19,7 +19,6 @@ public class Triangle extends Side implements Configuration {
     }
 
     public boolean isVisible() {
-        setNormalVector();
         return normalVector.getMatrix().dot(getPoint(0).getMatrix()) < 0;
     }
 
@@ -59,13 +58,6 @@ public class Triangle extends Side implements Configuration {
         double specular = K_s * Math.pow(Math.max(0.0, R.getMatrix().dot(V.getMatrix())), alpha);
 
         return Math.min(1.0, ambient + diffuse + specular);
-    }
-
-    private void setNormalVector(){
-        Point ab_vector = edges.get(0).getVector();
-        Point ac_vector = edges.get(2).getReversedVector();
-
-        normalVector = Operation.crossProduct(ab_vector, ac_vector);
     }
 
     private double value(Point point, Point plane){

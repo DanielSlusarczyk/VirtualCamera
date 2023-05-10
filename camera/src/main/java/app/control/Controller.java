@@ -31,7 +31,7 @@ public class Controller extends Application implements Configuration {
         // 20.0),view));
         // objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0,
         // 50.0),view));
-        objects.add(new Sphere(new Point(0, 0, 20), 10, 50, view));
+        objects.add(new Sphere(new Point(0, 0, 20), 20, 30, view));
 
         initObjects();
     }

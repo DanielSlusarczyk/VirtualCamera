@@ -64,12 +64,16 @@ public class Figure implements Configuration {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.rotatePointOX(p, angle));
         Movement.rotatePointOX(reference, angle);
 
+        sides.forEach(t -> Movement.rotatePointOX(t.getNormalVector(), angle));
+
         return this;
     }
 
     public Figure rotateOY(double angle) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.rotatePointOY(p, angle));
         Movement.rotatePointOY(reference, angle);
+
+        sides.forEach(t -> Movement.rotatePointOY(t.getNormalVector(), angle));
 
         return this;
     }
@@ -78,12 +82,16 @@ public class Figure implements Configuration {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.rotatePointOZ(p, angle));
         Movement.rotatePointOZ(reference, angle);
 
+        sides.forEach(t -> Movement.rotatePointOZ(t.getNormalVector(), angle));
+
         return this;
     }
 
     public Figure moveX(double x) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.move(p, x, 0.0, 0.0));
         Movement.move(reference, x, 0.0, 0.0);
+
+        sides.forEach(t -> Movement.move(t.getNormalVector(), x, 0.0, 0.0));
 
         return this;
     }
@@ -92,12 +100,16 @@ public class Figure implements Configuration {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.move(p, 0.0, x, 0.0));
         Movement.move(reference, 0.0, x, 0.0);
 
+        sides.forEach(t -> Movement.move(t.getNormalVector(), 0.0, x, 0.0));
+
         return this;
     }
 
     public Figure moveZ(double x) {
         sides.stream().flatMap(Side::getPointsStream).forEach(p -> Movement.move(p, 0.0, 0.0, x));
         Movement.move(reference, 0.0, 0.0, x);
+
+        sides.forEach(t -> Movement.move(t.getNormalVector(), 0.0, 0.0, x));
 
         return this;
     }
