@@ -31,7 +31,7 @@ public class Side {
             // Last point
             Point previous = new Point(point.getMatrix());
             edges.get(edges.size() - 1).setB(previous);
-            
+
             Point start = new Point(edges.get(0).getA().getMatrix());
             edges.add(new Edge(newPoint, start));
 
@@ -42,14 +42,17 @@ public class Side {
             edges.get(edges.size() - 1).setB(previous);
 
             edges.add(new Edge(newPoint, null));
-
         }
 
         return this;
     }
 
-    public Point getPoint(int index){
+    public Point getPoint(int index) {
         return edges.get(index).getA();
+    }
+
+    public Edge getEdge(int index) {
+        return edges.get(index);
     }
 
     public Stream<Edge> getEdgeStream() {
@@ -60,16 +63,16 @@ public class Side {
         return edges.stream().flatMap(Edge::getStream);
     }
 
-    public void introduce(){
+    public void introduce() {
         edges.forEach(edge -> System.out.println(edge));
     }
 
-    public Polygon mapToPolygon(View view){
+    public Polygon mapToPolygon(View view) {
         double[] coords = new double[edges.size() * 2];
 
-        for(int i = 0; i < edges.size(); i++){
+        for (int i = 0; i < edges.size(); i++) {
             Point P = view.projectPoint(edges.get(i).getA());
-            
+
             coords[2 * i] = P.getX();
             coords[2 * i + 1] = P.getY();
         }

@@ -23,6 +23,7 @@ public class Figure implements Configuration {
 
     public void setSides(List<Side> sides) {
         sides.forEach(side -> this.sides.addAll(Operation.triangule(side)));
+        System.out.println("[INFO] Placed objects: " + sides.size());
     }
 
     public void setReference(Point point) {

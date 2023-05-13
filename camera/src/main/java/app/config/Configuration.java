@@ -18,7 +18,8 @@ public interface Configuration {
     double alpha = 50;
 
     // FILL_RGB = null - only grid
-    Point FILL_RGB = new Point(48.0, 137.0, 227.0, 1);
+    //Point FILL_RGB = new Point(48.0, 137.0, 227.0, 1);
+    Point FILL_RGB = null;
 
     boolean AVG_TIME_PER_FRAME = true;
 }

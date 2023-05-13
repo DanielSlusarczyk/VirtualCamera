@@ -18,11 +18,11 @@ public class Edge {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "[Edge][ " + A + " -> " + B + " ]";
     }
 
-    public Point getReversedVector(){
+    public Point getReversedVector() {
         Point vector = getVector();
 
         vector.setMatrix(vector.getMatrix().negative());
@@ -30,16 +30,23 @@ public class Edge {
         return vector;
     }
 
-    public Point getVector(){
-        Point vector = new Point (B.getMatrix().minus(A.getMatrix()));
+    public Point getVector() {
+        Point vector = new Point(B.getMatrix().minus(A.getMatrix()));
 
         return vector;
     }
 
-    public Line mapToLine(View view){
+    public Line mapToLine(View view) {
         Point PA = view.projectPoint(A);
         Point PB = view.projectPoint(B);
 
         return new Line(PA.getX(), PA.getY(), PB.getX(), PB.getY());
+    }
+
+    public Point getCenter() {
+        return new Point(
+                (A.getX() + B.getX()) / 2,
+                (A.getY() + B.getY()) / 2,
+                (A.getZ() + B.getZ()) / 2);
     }
 }
