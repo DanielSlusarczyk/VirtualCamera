@@ -11,55 +11,60 @@ import app.geometry2D.Triangle;
 public class Icosphere extends Figure {
     private final double phi = (1.0 + Math.sqrt(5.0) * 0.5);
     private final List<Side> mesh = new ArrayList<>();
-    
-    public Icosphere(double size, int denisty, View view){
+    private final Point center;
+    private final double r;
+
+    public Icosphere(Point center, double r, int denisty, View view) {
         this.view = view;
+        this.center = center;
+        this.r = r;
 
-        double a = size;
-        double b = size / phi;
-        double scalar = Math.sqrt(a * a + b *b);
+        double a = r;
+        double b = r / phi;
 
-        Point V1 = new Point(0, b, -a);
-        Point V2 = new Point(b, a, 0);
-        Point V3 = new Point(-b, a, 0);
-        Point V4 = new Point(0, b, a);
-        Point V5 = new Point(0, -b, a);
-        Point V6 = new Point(-a, 0, b);
-        Point V7 = new Point(0, -b, -a);
-        Point V8 = new Point(a, 0, -b);
-        Point V9 = new Point(a, 0, b);
-        Point V10 = new Point(-a, 0, -b);
-        Point V11 = new Point(b, -a, 0);
-        Point V12 = new Point(-b, -a, 0);
+        Point V1 = scale(new Point(center.getX() + 0, center.getY() + b, center.getZ() - a));
+        Point V2 = scale(new Point(center.getX() + b, center.getY() + a, center.getZ() + 0));
+        Point V3 = scale(new Point(center.getX() - b, center.getY() + a, center.getZ() + 0));
+        Point V4 = scale(new Point(center.getX() + 0, center.getY() + b, center.getZ() + a));
+        Point V5 = scale(new Point(center.getX() + 0, center.getY() - b, center.getZ() + a));
+        Point V6 = scale(new Point(center.getX() - a, center.getY() + 0, center.getZ() + b));
+        Point V7 = scale(new Point(center.getX() + 0, center.getY() - b, center.getZ() - a));
+        Point V8 = scale(new Point(center.getX() + a, center.getY() + 0, center.getZ() - b));
+        Point V9 = scale(new Point(center.getX() + a, center.getY() + 0, center.getZ() + b));
+        Point V10 = scale(new Point(center.getX() - a, center.getY() + 0, center.getZ() - b));
+        Point V11 = scale(new Point(center.getX() + b, center.getY() - a, center.getZ() + 0));
+        Point V12 = scale(new Point(center.getX() - b, center.getY() - a, center.getZ() + 0));
 
-        List<Triangle> sides = new ArrayList<>(){{
-            add(new Triangle().add(V3).add(V2).add(V1));
-            add(new Triangle().add(V2).add(V3).add(V4));
-            add(new Triangle().add(V6).add(V5).add(V4));
-            add(new Triangle().add(V5).add(V9).add(V4));
-            add(new Triangle().add(V8).add(V7).add(V1));
-            add(new Triangle().add(V7).add(V10).add(V1));
-            add(new Triangle().add(V12).add(V11).add(V5));
-            add(new Triangle().add(V11).add(V12).add(V7));
-            add(new Triangle().add(V10).add(V6).add(V3));
-            add(new Triangle().add(V6).add(V10).add(V12));
-            add(new Triangle().add(V9).add(V8).add(V2));
-            add(new Triangle().add(V8).add(V9).add(V11));
-            add(new Triangle().add(V3).add(V6).add(V4));
-            add(new Triangle().add(V9).add(V2).add(V4));
-            add(new Triangle().add(V10).add(V3).add(V1));
-            add(new Triangle().add(V2).add(V8).add(V1));
-            add(new Triangle().add(V12).add(V10).add(V7));
-            add(new Triangle().add(V8).add(V11).add(V7));
-            add(new Triangle().add(V6).add(V12).add(V5));
-            add(new Triangle().add(V11).add(V9).add(V5));
-        }};
+        List<Triangle> sides = new ArrayList<>() {
+            {
+                add(new Triangle().add(V3).add(V2).add(V1));
+                add(new Triangle().add(V2).add(V3).add(V4));
+                add(new Triangle().add(V6).add(V5).add(V4));
+                add(new Triangle().add(V5).add(V9).add(V4));
+                add(new Triangle().add(V8).add(V7).add(V1));
+                add(new Triangle().add(V7).add(V10).add(V1));
+                add(new Triangle().add(V12).add(V11).add(V5));
+                add(new Triangle().add(V11).add(V12).add(V7));
+                add(new Triangle().add(V10).add(V6).add(V3));
+                add(new Triangle().add(V6).add(V10).add(V12));
+                add(new Triangle().add(V9).add(V8).add(V2));
+                add(new Triangle().add(V8).add(V9).add(V11));
+                add(new Triangle().add(V3).add(V6).add(V4));
+                add(new Triangle().add(V9).add(V2).add(V4));
+                add(new Triangle().add(V10).add(V3).add(V1));
+                add(new Triangle().add(V2).add(V8).add(V1));
+                add(new Triangle().add(V12).add(V10).add(V7));
+                add(new Triangle().add(V8).add(V11).add(V7));
+                add(new Triangle().add(V6).add(V12).add(V5));
+                add(new Triangle().add(V11).add(V9).add(V5));
+            }
+        };
 
-        sides.forEach(s -> split(s, denisty, scalar));
+        sides.forEach(s -> split(s, denisty));
 
         this.setSides(mesh);
 
-        this.setReference(new Point(0, 0, 0));
+        this.setReference(center);
     }
 
     //        V3
@@ -71,32 +76,34 @@ public class Icosphere extends Figure {
     //   /   \  /   \
     //  /_____\/_____\
     // V1      A      V2
-    private void split(Triangle t, int deepth, double radius){
-        if(deepth == 0){
+    private void split(Triangle t, int deepth) {
+        if (deepth == 0) {
             mesh.add(t);
         } else {
-            Point A = scale(t.getEdge(0).getCenter(), radius);
-            Point B = scale(t.getEdge(1).getCenter(), radius);
-            Point C = scale(t.getEdge(2).getCenter(), radius);
-                
+            Point A = scale(t.getEdge(0).getCenter());
+            Point B = scale(t.getEdge(1).getCenter());
+            Point C = scale(t.getEdge(2).getCenter());
+
             Triangle t1 = new Triangle().add(t.getPoint(1)).add(A).add(B);
             Triangle t2 = new Triangle().add(t.getPoint(0)).add(C).add(A);
             Triangle t3 = new Triangle().add(t.getPoint(2)).add(B).add(C);
             Triangle t4 = new Triangle().add(A).add(C).add(B);
 
-            split(t1, deepth - 1, radius);
-            split(t2, deepth - 1, radius);
-            split(t3, deepth - 1, radius);
-            split(t4, deepth - 1, radius);
+            split(t1, deepth - 1);
+            split(t2, deepth - 1);
+            split(t3, deepth - 1);
+            split(t4, deepth - 1);
         }
     }
 
-    private Point scale(Point p, double radius){
-        double length = Math.sqrt(p.getX() * p.getX() + p.getY() * p.getY() + p.getZ() * p.getZ());
+    // Project icohedron to icosphere
+    private Point scale(Point p) {
+        Point v = new Point(p.getMatrix().minus(center.getMatrix()), 0);
+        double length = Math.sqrt(v.getMatrix().elementPower(2).elementSum());
 
-        p.setX(p.getX() * radius/length);
-        p.setY(p.getY() * radius/length);
-        p.setZ(p.getZ() * radius/length);
+        p.setX(center.getX() + v.getX() * r / length);
+        p.setY(center.getY() + v.getY() * r / length);
+        p.setZ(center.getZ() + v.getZ() * r / length);
 
         return p;
     }
