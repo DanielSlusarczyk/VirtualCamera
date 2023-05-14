@@ -9,7 +9,6 @@ import app.config.Configuration;
 import app.geometry2D.Point;
 import app.geometry3D.Figure;
 import app.geometry3D.Icosphere;
-import app.geometry3D.Sphere;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;

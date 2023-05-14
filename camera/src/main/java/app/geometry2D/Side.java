@@ -15,13 +15,13 @@ public class Side {
     @Getter
     protected List<Edge> edges = new ArrayList<>();
     @Setter
-    protected double K_a = 0.25;
+    protected double K_a = 0.1;
     @Setter
-    protected double K_s = 0.75;
+    protected double K_s = 0.6;
     @Setter
-    protected double K_d = 0.25;
+    protected double K_d = 0.8;
     @Setter
-    protected double alpha = 50;
+    protected double alpha = 45;
 
     public Side(int nmbOfPoints) {
         this.nmbOfPoints = nmbOfPoints;
