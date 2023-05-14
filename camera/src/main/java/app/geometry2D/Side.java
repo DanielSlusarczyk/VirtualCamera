@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import app.config.Configuration;
 import app.control.View;
 import javafx.scene.shape.Polygon;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Side {
+public class Side implements Configuration {
     @Getter
     protected int nmbOfPoints;
     @Getter
     protected List<Edge> edges = new ArrayList<>();
     @Setter
-    protected double K_a = 0.1;
+    protected double K_a = init_K_a;
     @Setter
-    protected double K_s = 0.6;
+    protected double K_s = init_K_s;
     @Setter
-    protected double K_d = 0.8;
+    protected double K_d = init_K_d;
     @Setter
-    protected double alpha = 45;
+    protected double alpha = init_alpha;
 
     public Side(int nmbOfPoints) {
         this.nmbOfPoints = nmbOfPoints;

@@ -69,7 +69,7 @@ public class Controller extends Application implements Configuration {
             Pane slidersPane = new Pane();
             VBox vBox = new VBox();
 
-            vBox.getChildren().add(initSlider("Ambient (K_a)", 0, 1, 0.25, 0.01, new ChangeListener<Number>() {
+            vBox.getChildren().add(initSlider("Ambient (K_a)", 0, 1, init_K_a, 0.01, new ChangeListener<Number>() {
 
                 @Override
                 public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
@@ -77,7 +77,7 @@ public class Controller extends Application implements Configuration {
                     objectsPane.requestFocus();
                 }
             }));
-            vBox.getChildren().add(initSlider("Diffuse (K_d)", 0, 1, 0.25, 0.01, new ChangeListener<Number>() {
+            vBox.getChildren().add(initSlider("Diffuse (K_d)", 0, 1, init_K_d, 0.01, new ChangeListener<Number>() {
 
                 @Override
                 public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
@@ -85,7 +85,7 @@ public class Controller extends Application implements Configuration {
                     objectsPane.requestFocus();
                 }
             }));
-            vBox.getChildren().add(initSlider("Specular (K_s)", 0, 1, 0.25, 0.01, new ChangeListener<Number>() {
+            vBox.getChildren().add(initSlider("Specular (K_s)", 0, 1, init_K_s, 0.01, new ChangeListener<Number>() {
 
                 @Override
                 public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
@@ -93,7 +93,7 @@ public class Controller extends Application implements Configuration {
                     objectsPane.requestFocus();
                 }
             }));
-            vBox.getChildren().add(initSlider("Shininess (alpha)", 1, 100, 50, 1, new ChangeListener<Number>() {
+            vBox.getChildren().add(initSlider("Shininess (alpha)", 1, 100, init_alpha, 1, new ChangeListener<Number>() {
 
                 @Override
                 public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {

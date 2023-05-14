@@ -12,6 +12,11 @@ public interface Configuration {
 
     Point LIGHT = new Point(20,20, 100, 0);
 
+    double init_K_a = 0.1;
+    double init_K_s = 0.6;
+    double init_K_d = 0.8;
+    double init_alpha = 45;
+
     // FILL_RGB = null - only grid
     Point FILL_RGB = new Point(48.0, 137.0, 227.0, 1);
 
