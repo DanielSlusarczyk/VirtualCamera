@@ -1,10 +1,9 @@
 package app.geometry2D;
 
-import app.config.Configuration;
 import app.transform.Operation;
 import lombok.Getter;
 
-public class Triangle extends Side implements Configuration {
+public class Triangle extends Side {
     @Getter
     private Point normalVector;
 
