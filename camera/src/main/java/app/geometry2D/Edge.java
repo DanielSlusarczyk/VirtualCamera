@@ -3,6 +3,7 @@ package app.geometry2D;
 import java.util.stream.Stream;
 
 import app.control.View;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,8 +40,10 @@ public class Edge {
     public Line mapToLine(View view) {
         Point PA = view.projectPoint(A);
         Point PB = view.projectPoint(B);
-
-        return new Line(PA.getX(), PA.getY(), PB.getX(), PB.getY());
+        
+        Line line = new Line(PA.getX(), PA.getY(), PB.getX(), PB.getY());
+        line.setStroke(Color.WHITE);
+        return line;
     }
 
     public Point getCenter() {

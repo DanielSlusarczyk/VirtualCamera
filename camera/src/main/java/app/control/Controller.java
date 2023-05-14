@@ -12,14 +12,23 @@ import app.geometry3D.Icosphere;
 import app.geometry3D.Sphere;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Controller extends Application implements Configuration {
     private Pane mainPane = new Pane();
+    private Pane objectsPane = new Pane();
     private Scene scene = new Scene(mainPane, WINDOW_WIDTH, WINDOW_HEIGHT);
+
     private List<Figure> objects = new ArrayList<>();
     private View view = new View();
     private long timeSum = 0;
@@ -28,19 +37,18 @@ public class Controller extends Application implements Configuration {
     Map<KeyCode, Boolean> pressedButtons = new HashMap<>();
 
     private void addObjects() {
-        // objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0,
-        // 20.0),view));
-        // objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0,
-        // 50.0),view));
-        //objects.add(new Sphere(new Point(50, 0, 0), 20, 30, view));
-        objects.add(new Icosphere(new Point(50, 0, 0), 20, 3, view));
+        // objects.add(new Prism(new Point(-25.0, 0.0, 0.0), new Point(-5.0, 20.0, 20.0),view));
+        // objects.add(new Prism(new Point(5.0, 0.0, 0.0), new Point(25.0, 20.0, 50.0),view));
+        // objects.add(new Sphere(new Point(50, 0, 0), 20, 40, view));
+        objects.add(new Icosphere(new Point(0, 0, 0), 30, 4, view));
 
         initObjects();
+        initPanes();
     }
 
     private void initObjects() {
         objects.forEach(o -> {
-            mainPane.getChildren().addAll(o.rotateOX(90).moveZ(150).getDrawable());
+            objectsPane.getChildren().addAll(o.rotateOX(90).moveZ(150).getDrawable());
         });
 
         Movement.rotatePointOX(LIGHT, 90);
@@ -53,6 +61,54 @@ public class Controller extends Application implements Configuration {
         scene.setOnKeyReleased(event -> {
             pressedButtons.put(event.getCode(), false);
         });
+    }
+
+    private void initPanes() {
+        mainPane.setStyle("-fx-background-color: black;");
+
+        if (FILL_RGB != null) {
+            Pane slidersPane = new Pane();
+            VBox vBox = new VBox();
+
+            vBox.getChildren().add(initSlider("Ambient (K_a)", 0, 1, 0.25, 0.01, new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+                    objects.forEach(ob -> ob.getSides().forEach(t -> t.setK_a(newValue.doubleValue())));
+                    objectsPane.requestFocus();
+                }
+            }));
+            vBox.getChildren().add(initSlider("Diffuse (K_d)", 0, 1, 0.25, 0.01, new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+                    objects.forEach(ob -> ob.getSides().forEach(t -> t.setK_d(newValue.doubleValue())));
+                    objectsPane.requestFocus();
+                }
+            }));
+            vBox.getChildren().add(initSlider("Specular (K_s)", 0, 1, 0.25, 0.01, new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+                    objects.forEach(ob -> ob.getSides().forEach(t -> t.setK_s(newValue.doubleValue())));
+                    objectsPane.requestFocus();
+                }
+            }));
+            vBox.getChildren().add(initSlider("Shininess (alpha)", 1, 100, 50, 1, new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+                    objects.forEach(ob -> ob.getSides().forEach(t -> t.setAlpha(newValue.doubleValue())));
+                    objectsPane.requestFocus();
+                }
+            }));
+
+            slidersPane.getChildren().add(vBox);
+            mainPane.getChildren().addAll(objectsPane, slidersPane);
+
+        } else {
+            mainPane.getChildren().addAll(objectsPane);
+        }
     }
 
     @Override
@@ -70,8 +126,8 @@ public class Controller extends Application implements Configuration {
 
                 handleButton();
 
-                mainPane.getChildren().clear();
-                objects.forEach(o -> mainPane.getChildren().addAll(o.getDrawable()));
+                objectsPane.getChildren().clear();
+                objects.forEach(o -> objectsPane.getChildren().addAll(o.getDrawable()));
 
                 timeInfo(time);
             }
@@ -155,6 +211,30 @@ public class Controller extends Application implements Configuration {
                 frames = 0;
             }
         }
+    }
+
+    public HBox initSlider(String label, int min, int max, double value, double inc,
+            ChangeListener<Number> changeListener) {
+        HBox hBox = new HBox();
+
+        Slider slider = new Slider();
+        slider.setMin(min);
+        slider.setMax(max);
+        slider.setValue(value);
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        slider.setBlockIncrement(inc);
+        slider.setFocusTraversable(false);
+        slider.valueProperty().addListener(changeListener);
+
+        Label description = new Label(label);
+        description.setPrefWidth(90);
+        description.setTextFill(Color.WHITE);
+        hBox.getChildren().add(0, description);
+        hBox.getChildren().add(1, slider);
+        hBox.setSpacing(10);
+
+        return hBox;
     }
 
     public static void run(String[] args) {

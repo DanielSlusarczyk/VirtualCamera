@@ -7,12 +7,21 @@ import java.util.stream.Stream;
 import app.control.View;
 import javafx.scene.shape.Polygon;
 import lombok.Getter;
+import lombok.Setter;
 
 public class Side {
     @Getter
     protected int nmbOfPoints;
     @Getter
     protected List<Edge> edges = new ArrayList<>();
+    @Setter
+    protected double K_a = 0.25;
+    @Setter
+    protected double K_s = 0.75;
+    @Setter
+    protected double K_d = 0.25;
+    @Setter
+    protected double alpha = 50;
 
     public Side(int nmbOfPoints) {
         this.nmbOfPoints = nmbOfPoints;
