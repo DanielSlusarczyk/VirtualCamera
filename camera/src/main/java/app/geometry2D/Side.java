@@ -23,9 +23,12 @@ public class Side implements Configuration {
     protected double K_d = init_K_d;
     @Setter
     protected double alpha = init_alpha;
+    @Setter @Getter
+    protected Point RGB;
 
-    public Side(int nmbOfPoints) {
+    public Side(int nmbOfPoints, Point RGB) {
         this.nmbOfPoints = nmbOfPoints;
+        this.RGB = RGB;
     }
 
     public Side add(Point point) {

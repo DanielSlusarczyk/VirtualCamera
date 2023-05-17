@@ -54,7 +54,7 @@ public class Sphere extends Figure {
                 Point C = mesh[i + 1][rightIndex];
                 Point D = mesh[i + 1][j];
 
-                sides.add(new Side(4).add(A).add(B).add(C).add(D));
+                sides.add(new Side(4, FILL_RGB).add(A).add(B).add(C).add(D));
             }
         }
 
@@ -71,7 +71,7 @@ public class Sphere extends Figure {
             Point B = mesh[density - 2][rightIndex];
             Point C = positivePole;
 
-            sides.add(new Triangle().add(A).add(B).add(C));
+            sides.add(new Triangle(FILL_RGB).add(A).add(B).add(C));
         }
 
         // Bottom pole
@@ -87,7 +87,7 @@ public class Sphere extends Figure {
             Point B = mesh[0][rightIndex];
             Point C = negativePole;
 
-            sides.add(new Triangle().add(A).add(B).add(C));
+            sides.add(new Triangle(FILL_RGB).add(A).add(B).add(C));
         }
 
         this.setSides(sides);

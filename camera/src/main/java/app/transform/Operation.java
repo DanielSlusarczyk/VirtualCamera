@@ -3,19 +3,20 @@ package app.transform;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.config.Configuration;
 import app.geometry2D.Edge;
 import app.geometry2D.Point;
 import app.geometry2D.Side;
 import app.geometry2D.Triangle;
 
-public class Operation {
+public class Operation implements Configuration {
     public static List<Triangle> triangule(Side input) {
         List<Edge> edges = input.getEdges();
         List<Triangle> triangulation = new ArrayList<>();
 
         if (edges.size() == 3) {
             triangulation.add(
-                    new Triangle()
+                    new Triangle(FILL_RGB)
                             .add(input.getPoint(0))
                             .add(input.getPoint(1))
                             .add(input.getPoint(2)));
@@ -24,13 +25,13 @@ public class Operation {
         }
 
         triangulation.add(
-                new Triangle()
+                new Triangle(FILL_RGB)
                         .add(edges.get(0).getA())
                         .add(edges.get(1).getA())
                         .add(edges.get(2).getA()));
 
         triangulation.add(
-                new Triangle()
+                new Triangle(FILL_RGB)
                         .add(edges.get(2).getA())
                         .add(edges.get(3).getA())
                         .add(edges.get(0).getA()));

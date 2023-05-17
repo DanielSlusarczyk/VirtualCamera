@@ -65,7 +65,7 @@ public class Controller extends Application implements Configuration {
     private void initPanes() {
         mainPane.setStyle("-fx-background-color: black;");
 
-        if (FILL_RGB != null) {
+        if (FILL) {
             Pane slidersPane = new Pane();
             VBox vBox = new VBox();
 
@@ -98,6 +98,30 @@ public class Controller extends Application implements Configuration {
                 @Override
                 public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
                     objects.forEach(ob -> ob.getSides().forEach(t -> t.setAlpha(newValue.doubleValue())));
+                    objectsPane.requestFocus();
+                }
+            }));
+            vBox.getChildren().add(initSlider("R", 1, 255, FILL_RGB.getX(), 1, new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+                    objects.forEach(ob -> ob.getSides().forEach(t -> t.getRGB().setX(newValue.doubleValue())));
+                    objectsPane.requestFocus();
+                }
+            }));
+            vBox.getChildren().add(initSlider("G", 1, 255, FILL_RGB.getY(), 1, new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+                    objects.forEach(ob -> ob.getSides().forEach(t -> t.getRGB().setY(newValue.doubleValue())));
+                    objectsPane.requestFocus();
+                }
+            }));
+            vBox.getChildren().add(initSlider("B", 1, 255, FILL_RGB.getZ(), 1, new ChangeListener<Number>() {
+
+                @Override
+                public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+                    objects.forEach(ob -> ob.getSides().forEach(t -> t.getRGB().setZ(newValue.doubleValue())));
                     objectsPane.requestFocus();
                 }
             }));

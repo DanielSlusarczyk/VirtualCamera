@@ -32,12 +32,12 @@ public class Prism extends Figure {
         Point H = new Point(X.getX(), Y.getY(), Y.getZ()); 
 
         List<Side> sides = new ArrayList<>(){{
-            add(new Side(4).add(A).add(B).add(C).add(D));
-            add(new Side(4).add(A).add(B).add(F).add(E));
-            add(new Side(4).add(B).add(C).add(G).add(F));
-            add(new Side(4).add(E).add(F).add(G).add(H));
-            add(new Side(4).add(D).add(C).add(G).add(H));
-            add(new Side(4).add(A).add(D).add(H).add(E));
+            add(new Side(4, FILL_RGB).add(A).add(B).add(C).add(D));
+            add(new Side(4, FILL_RGB).add(A).add(B).add(F).add(E));
+            add(new Side(4, FILL_RGB).add(B).add(C).add(G).add(F));
+            add(new Side(4, FILL_RGB).add(E).add(F).add(G).add(H));
+            add(new Side(4, FILL_RGB).add(D).add(C).add(G).add(H));
+            add(new Side(4, FILL_RGB).add(A).add(D).add(H).add(E));
         }};
         
         this.setSides(sides);

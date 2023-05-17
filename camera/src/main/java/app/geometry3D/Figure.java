@@ -32,7 +32,7 @@ public class Figure implements Configuration {
     }
 
     public List<Shape> getDrawable() {
-        return FILL_RGB != null ? getPolygons() : getLines();
+        return FILL ? getPolygons() : getLines();
     }
 
     public List<Shape> getLines() {
@@ -52,7 +52,7 @@ public class Figure implements Configuration {
             // Phong reflecion model
             double phong = triangle.getPhongScalar();
 
-            polygon.setFill(Color.rgb((int)(FILL_RGB.getX() * phong), (int)(FILL_RGB.getY() * phong), (int)(FILL_RGB.getZ() * phong), FILL_RGB.getW()));
+            polygon.setFill(Color.rgb((int)(triangle.getRGB().getX() * phong), (int)(triangle.getRGB().getY() * phong), (int)(triangle.getRGB().getZ() * phong), triangle.getRGB().getW()));
             polygon.setStroke(polygon.getFill());
 
             toDraw.add(polygon);

@@ -7,8 +7,8 @@ public class Triangle extends Side {
     @Getter
     private Point normalVector;
 
-    public Triangle() {
-        super(3);
+    public Triangle(Point RGB) {
+        super(3, RGB);
     }
 
     public Triangle add(Point point) {

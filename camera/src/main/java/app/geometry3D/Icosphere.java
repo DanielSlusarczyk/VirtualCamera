@@ -37,26 +37,26 @@ public class Icosphere extends Figure {
 
         List<Triangle> sides = new ArrayList<>() {
             {
-                add(new Triangle().add(V3).add(V2).add(V1));
-                add(new Triangle().add(V2).add(V3).add(V4));
-                add(new Triangle().add(V6).add(V5).add(V4));
-                add(new Triangle().add(V5).add(V9).add(V4));
-                add(new Triangle().add(V8).add(V7).add(V1));
-                add(new Triangle().add(V7).add(V10).add(V1));
-                add(new Triangle().add(V12).add(V11).add(V5));
-                add(new Triangle().add(V11).add(V12).add(V7));
-                add(new Triangle().add(V10).add(V6).add(V3));
-                add(new Triangle().add(V6).add(V10).add(V12));
-                add(new Triangle().add(V9).add(V8).add(V2));
-                add(new Triangle().add(V8).add(V9).add(V11));
-                add(new Triangle().add(V3).add(V6).add(V4));
-                add(new Triangle().add(V9).add(V2).add(V4));
-                add(new Triangle().add(V10).add(V3).add(V1));
-                add(new Triangle().add(V2).add(V8).add(V1));
-                add(new Triangle().add(V12).add(V10).add(V7));
-                add(new Triangle().add(V8).add(V11).add(V7));
-                add(new Triangle().add(V6).add(V12).add(V5));
-                add(new Triangle().add(V11).add(V9).add(V5));
+                add(new Triangle(FILL_RGB).add(V3).add(V2).add(V1));
+                add(new Triangle(FILL_RGB).add(V2).add(V3).add(V4));
+                add(new Triangle(FILL_RGB).add(V6).add(V5).add(V4));
+                add(new Triangle(FILL_RGB).add(V5).add(V9).add(V4));
+                add(new Triangle(FILL_RGB).add(V8).add(V7).add(V1));
+                add(new Triangle(FILL_RGB).add(V7).add(V10).add(V1));
+                add(new Triangle(FILL_RGB).add(V12).add(V11).add(V5));
+                add(new Triangle(FILL_RGB).add(V11).add(V12).add(V7));
+                add(new Triangle(FILL_RGB).add(V10).add(V6).add(V3));
+                add(new Triangle(FILL_RGB).add(V6).add(V10).add(V12));
+                add(new Triangle(FILL_RGB).add(V9).add(V8).add(V2));
+                add(new Triangle(FILL_RGB).add(V8).add(V9).add(V11));
+                add(new Triangle(FILL_RGB).add(V3).add(V6).add(V4));
+                add(new Triangle(FILL_RGB).add(V9).add(V2).add(V4));
+                add(new Triangle(FILL_RGB).add(V10).add(V3).add(V1));
+                add(new Triangle(FILL_RGB).add(V2).add(V8).add(V1));
+                add(new Triangle(FILL_RGB).add(V12).add(V10).add(V7));
+                add(new Triangle(FILL_RGB).add(V8).add(V11).add(V7));
+                add(new Triangle(FILL_RGB).add(V6).add(V12).add(V5));
+                add(new Triangle(FILL_RGB).add(V11).add(V9).add(V5));
             }
         };
 
@@ -84,10 +84,10 @@ public class Icosphere extends Figure {
             Point B = scale(t.getEdge(1).getCenter());
             Point C = scale(t.getEdge(2).getCenter());
 
-            Triangle t1 = new Triangle().add(t.getPoint(1)).add(A).add(B);
-            Triangle t2 = new Triangle().add(t.getPoint(0)).add(C).add(A);
-            Triangle t3 = new Triangle().add(t.getPoint(2)).add(B).add(C);
-            Triangle t4 = new Triangle().add(A).add(C).add(B);
+            Triangle t1 = new Triangle(FILL_RGB).add(t.getPoint(1)).add(A).add(B);
+            Triangle t2 = new Triangle(FILL_RGB).add(t.getPoint(0)).add(C).add(A);
+            Triangle t3 = new Triangle(FILL_RGB).add(t.getPoint(2)).add(B).add(C);
+            Triangle t4 = new Triangle(FILL_RGB).add(A).add(C).add(B);
 
             split(t1, deepth - 1);
             split(t2, deepth - 1);
