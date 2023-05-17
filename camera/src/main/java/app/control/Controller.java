@@ -13,6 +13,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -68,6 +69,7 @@ public class Controller extends Application implements Configuration {
         if (FILL) {
             Pane slidersPane = new Pane();
             VBox vBox = new VBox();
+            VBox vBoxRGB = new VBox();
 
             vBox.getChildren().add(initSlider("Ambient (K_a)", 0, 1, init_K_a, 0.01, new ChangeListener<Number>() {
 
@@ -101,7 +103,7 @@ public class Controller extends Application implements Configuration {
                     objectsPane.requestFocus();
                 }
             }));
-            vBox.getChildren().add(initSlider("R", 1, 255, FILL_RGB.getX(), 1, new ChangeListener<Number>() {
+            vBoxRGB.getChildren().add(initSlider("R", 1, 255, FILL_RGB.getX(), 1, new ChangeListener<Number>() {
 
                 @Override
                 public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
@@ -109,7 +111,7 @@ public class Controller extends Application implements Configuration {
                     objectsPane.requestFocus();
                 }
             }));
-            vBox.getChildren().add(initSlider("G", 1, 255, FILL_RGB.getY(), 1, new ChangeListener<Number>() {
+            vBoxRGB.getChildren().add(initSlider("G", 1, 255, FILL_RGB.getY(), 1, new ChangeListener<Number>() {
 
                 @Override
                 public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
@@ -117,7 +119,7 @@ public class Controller extends Application implements Configuration {
                     objectsPane.requestFocus();
                 }
             }));
-            vBox.getChildren().add(initSlider("B", 1, 255, FILL_RGB.getZ(), 1, new ChangeListener<Number>() {
+            vBoxRGB.getChildren().add(initSlider("B", 1, 255, FILL_RGB.getZ(), 1, new ChangeListener<Number>() {
 
                 @Override
                 public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
@@ -126,7 +128,9 @@ public class Controller extends Application implements Configuration {
                 }
             }));
 
+            vBoxRGB.setTranslateX(WINDOW_WIDTH/2);
             slidersPane.getChildren().add(vBox);
+            slidersPane.getChildren().add(vBoxRGB);
             mainPane.getChildren().addAll(objectsPane, slidersPane);
 
         } else {
@@ -245,12 +249,12 @@ public class Controller extends Application implements Configuration {
         slider.setMax(max);
         slider.setValue(value);
         slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
         slider.setBlockIncrement(inc);
         slider.setFocusTraversable(false);
         slider.valueProperty().addListener(changeListener);
 
         Label description = new Label(label);
+        description.setAlignment(Pos.BOTTOM_RIGHT);
         description.setPrefWidth(90);
         description.setTextFill(Color.WHITE);
         hBox.getChildren().add(0, description);
