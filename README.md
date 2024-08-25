@@ -1,7 +1,9 @@
 [:gb: English version :gb:](README_ENG.md)
 
 ## Projekt
+ <div align="justify">
 Projekt zakłada stworzenie wirtualnej kamery korzystając z wyświetlania prostych elementów graficznych (np. punkt, linia, wielobok) w oknie aplikacji z uwzględnieniem prawidłowego wyświetlania ścian prezentowanych obiektów. Wymagane jest zrealizowanie implementacji wykonującej wszystkie niezbędne obliczenia i wyświetlającej prezentowane elementy w oknie aplikacji zgodnie z ludzką percepcją ze szczególnym naciskiem na prawidłowe zachowanie wypełnienia obiektów na całej powierzchni w czasie manipulowania położenia kamerą. Sama kamera powinna umożliwiać poruszanie się w dowolnym kierunku, manipulowanie kątem patrzenia, wykonywanie przybliżenia (ang. zoom in), oraz oddalenia (ang. zoom out) z zachowaniem odpowiedniej perspektywy charakteryzujące ludzkie postrzegania rzeczywistości.
+</div>
 
 ## Figury
 :small_blue_diamond: Icosfera złożona z 320 trójkątów:
